@@ -5,8 +5,8 @@
     <a href='index.php?controller=LibrosController&action=mostrarListaLibros'>To be</a>
     <a href='index.php?controller=AutoresController&action=mostrarListaAutores'>Done</a>
     <?php
-        if (Seguridad::haySesion()) {
-            echo "<a href='index.php?controller=UsuariosController&action=cerrarSesion'>Cerrar sesión</a>";
+        if (Security::isSession()) {
+            echo "<a href='index.php?controller=UserController&action=closeSession'>Cerrar sesión</a>";
         }
     ?>
 </nav>

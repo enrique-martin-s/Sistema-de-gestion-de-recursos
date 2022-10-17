@@ -8,11 +8,12 @@
 // En esta implementación, usaremos variables de sesión para la autenticación de usuarios
 // y limpieza de variables sencilla basada en una lista de palabras y caracteres prohibidos. 
 
-class Seguridad {
+class Security {
 
     // Abre una sesión y guarda el id del usuario
     public static function iniciarSesion($id) {
-        $_SESSION["idUsuario"] = $id;
+        $_SESSION["idUser"] = $id;
+        echo $id;
     }
 
     // Cierra una sesión y elimina el id del usuario
@@ -22,16 +23,16 @@ class Seguridad {
 
     // Devuelve el id del usuario que inició la sesión
     public static function getIdUsuario() {
-        if (isset($_SESSION["idUsuario"])) {
-            return $_SESSION["idUsuario"];
+        if (isset($_SESSION["idUser"])) {
+            return $_SESSION["idUser"];
         } else {
             return false;
         }
     }
 
     // Devuelve true si hay una sesión iniciada y false en caso contrario
-    public static function haySesion() {
-        if (isset($_SESSION["idUsuario"])) {
+    public static function isSession() {
+        if (isset($_SESSION["idUser"])) {
             return true;
         }
         else {

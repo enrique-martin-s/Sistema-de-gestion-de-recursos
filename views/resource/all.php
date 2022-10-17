@@ -24,16 +24,25 @@ if (count($resourceList) == 0) {
   echo "No hay datos";
 } else {
   echo "<table border ='1'>";
+  echo "<thead>
+            <tr>
+              <th>Name</th>
+              <th>Description</th>
+              <th>Location</th>
+              <th>Image</th>
+              <th>Actions</th>
+            </tr>
+          </thead>";
   foreach ($resourceList as $fila) {
     echo "<tr>";
     echo "<td>" . $fila->name . "</td>";
     echo "<td>" . $fila->description . "</td>";
     echo "<td>" . $fila->location . "</td>";
     echo "<td>" . $fila->image . "</td>";
-    echo "<td><a href='index.php?action=formularioModificarLibro&idLibro=" . $fila->idLibro . "'>Modificar</a></td>";
-    echo "<td><a href='index.php?action=borrarLibro&idLibro=" . $fila->idLibro . "'>Borrar</a></td>";
+    echo "<td><a href='index.php?action=formularioModificarLibro&idLibro=" . $fila->id. "'>Modificar</a></td>";
+    echo "<td><a href='index.php?action=borrarLibro&idLibro=" . $fila->id . "'>Borrar</a></td>";
     echo "</tr>";
   }
   echo "</table>";
 }
-echo "<p><a href='index.php?action=formularioInsertarLibros'>Nuevo</a></p>";
+echo "<p><a href='index.php?controller=resourcesController&action=formAddResource'>Nuevo</a></p>";
