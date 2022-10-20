@@ -18,12 +18,12 @@ $location = $resource->location ?? "";
 $image = $resource->image ?? "";
 
 // Creamos el formulario con los campos del resource
-echo "<form action = 'index.php' method = 'get'>
+echo "<form action = 'index.php' method = 'post' enctype='multipart/form-data'>
         <input type='hidden' name='id' value='".$id."'>
         Name:<input type='text' name='name' value='".$name."'><br>
         Description:<input type='text' name='description' value='".$description."'><br>
         Location:<input type='text' name='location' value='".$location."'><br>
-        Image:<input type='text' name='image' value='".$image."'><br>
+        Image:<input name='subir_archivo' type='file' /><br>
         <input type='hidden' name='controller' value='resourcesController'>";
 
 

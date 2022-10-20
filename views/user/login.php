@@ -16,3 +16,4 @@ if (isset($data["info"])) {
     <input type='hidden' name='controller' value='UserController'>
     <button type='submit'>Send</button>
 </form>
+<p><a href='index.php?controller=UserController&action=formAddUser'>Nuevo usuario</a></p>

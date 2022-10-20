@@ -17,7 +17,7 @@ class Security {
     }
 
     // Cierra una sesión y elimina el id del usuario
-    public static function cerrarSesion() {
+    public static function closeSession() {
         session_destroy();
     }
 
@@ -33,6 +33,19 @@ class Security {
     // Devuelve true si hay una sesión iniciada y false en caso contrario
     public static function isSession() {
         if (isset($_SESSION["idUser"])) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+    public static function setLogged($data){
+        $_SESSION["valid"] = $data;
+    }
+
+    public static function isLogged() {
+        if (isset($_SESSION["valid"])) {
             return true;
         }
         else {

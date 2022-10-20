@@ -30,4 +30,9 @@ class User extends Model
     public function cerrarSesion() {
         Security::cerrarSesion();
     }
+
+    public function addUser($username, $passwd, $realname) {
+        $result = $this->db->dataManipulation("INSERT INTO Users (username, password, realname, type) VALUES ('$username', '$passwd', '$realname', 'user')");
+        return $result;
+    }
 }

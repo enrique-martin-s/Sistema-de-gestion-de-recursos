@@ -50,6 +50,11 @@ class Resource extends Model
                                 WHERE id = '$idResource'");
         return $ok;
     }
+    public function delete($idResource)
+    {
+        $ok = $this->db->dataManipulation("DELETE FROM Resources WHERE id = '$idResource'");
+        return $ok;
+    }
 
     // Busca un texto en las tablas de libros y autores. Devuelve un array de objetos con todos los libros
     // que cumplen el criterio de búsqueda.

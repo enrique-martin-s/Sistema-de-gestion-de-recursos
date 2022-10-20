@@ -1,13 +1,7 @@
 
     <?php
         session_start();
-        echo ($_SESSION["idUser"]);
 
-        /* if (!isset($_SESSION["idUser"])) {   
-            echo ("Sesion no iniciada");
-        }else{
-            echo ("Sesion ya iniciada");
-        } */
 
         include_once "models/security.php";
 

@@ -46,15 +46,21 @@ class ResourcesController
 
     public function insertResource()
     {
-        $name = $_REQUEST["name"];
-        $description = $_REQUEST["description"];
-        $location = $_REQUEST["location"];
-        $image = $_REQUEST["image"];
 
-        $result = $this->resource->insert($name, $description, $location, $image);
-        $data["resourceList"] = $this->resource->getAll();
+        $origen = $_FILES['subir_archivo']['tmp_name'];
+        $destino = 'assets/images/'.basename($_FILES['subir_archivo']['name']);
+        if (move_uploaded_file($origen,
+            $destino)) {
+                $name = $_REQUEST["name"];
+                $description = $_REQUEST["description"];
+                $location = $_REQUEST["location"];
+                $image = $destino;
+                $result = $this->resource->insert($name, $description, $location, $image);        
+            } else {
+                echo "Error al subir el archivo";
+            };
         header("Location: index.php?controller=ResourcesController&action=showResources");
-        require_once View::render("resource/all", $data);
+
         /* if (Security::haySesion()) {
             // Primero, recuperamos todos los datos del formulario
             $titulo = Security::limpiar($_REQUEST["titulo"]);
@@ -90,26 +96,24 @@ class ResourcesController
 
     // --------------------------------- BORRAR LIBROS ----------------------------------------
 
-    public function borrarLibro()
+    public function deleteResource()
     {
-        if (Security::haySesion()) {
-            // Recuperamos el id del resource que hay que borrar
-            $idLibro = Security::limpiar($_REQUEST["idLibro"]);
-            // Pedimos al modelo que intente borrar el resource
-            $result = $this->resource->delete($idLibro);
-            // Comprobamos si el borrado ha tenido éxito
-            if ($result == 0) {
-                $data["error"] = "Ha ocurrido un error al borrar el resource. Por favor, inténtelo de nuevo";
-            } else {
-                $data["info"] = "Libro borrado con éxito";
-            }
-            $data["resourceList"] = $this->resource->getAll();
-            View::render("resource/all", $data);
+        $id = $_REQUEST["id"];
+        $result = $this->resource->delete($id);
+        $data["resourceList"] = $this->resource->getAll();
+        header("Location: index.php?controller=ResourcesController&action=showResources");
+        require_once View::render("resource/all", $data);
+        /* if (Security::haySesion()) {
+            $id = $_REQUEST["id"];
+            $result = $this->libro->delete($id);
+            $data["listaLibros"] = $this->libro->getAll();
+            View::render("libro/all", $data);
         } else {
             $data["error"] = "No tienes permiso para eso";
             View::render("usuario/login", $data);
-        }
+        } */
     }
+    
 
     // --------------------------------- FORMULARIO MODIFICAR LIBROS ----------------------------------------
 
