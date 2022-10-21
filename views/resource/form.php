@@ -3,8 +3,8 @@ if (isset($data)) {
     extract($data);   
 }
 
-if (isset($resource)) {   
-    echo "<h1>Modificación de resources</h1>";
+if (isset($resource)) {  
+    echo "<h1>Modify resources</h1>";
 } else {
     echo "<h1>Register a new resource</h1>";
 }
@@ -22,9 +22,12 @@ echo "<form action = 'index.php' method = 'post' enctype='multipart/form-data'>
         <input type='hidden' name='id' value='".$id."'>
         Name:<input type='text' name='name' value='".$name."'><br>
         Description:<input type='text' name='description' value='".$description."'><br>
-        Location:<input type='text' name='location' value='".$location."'><br>
-        Image:<input name='subir_archivo' type='file' /><br>
-        <input type='hidden' name='controller' value='resourcesController'>";
+        Location:<input type='text' name='location' value='".$location."'><br>";
+        if($image!=""){
+            echo "<img src='".$image."' alt='imagen_recurso' name='image' width='100px' value='".$image."'><br>";
+        }
+        echo "Image:<input name='subir_archivo' type='file' /><br>";
+        echo "<input type='hidden' name='controller' value='resourcesController'>";
 
 
 if (isset($resource)) {

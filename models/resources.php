@@ -22,6 +22,12 @@ class Resource extends Model
         return $result[0]->lastId;
     }
 
+    public function get($id)
+    {
+        $result = $this->db->dataQuery("SELECT * FROM Resources WHERE id = $id");
+        return $result[0];
+    }
+
     // Inserta un libro. Devuelve 1 si tiene éxito o 0 si falla.
     public function insert($name, $description, $location, $image)
     {
@@ -39,21 +45,15 @@ class Resource extends Model
     //     return $correctos;
     // }
 
-    // Actualiza un libro (todo menos sus autores). Devuelve 1 si tiene éxito y 0 en caso de fallo.
+    // Actualiza un resource . Devuelve 1 si tiene éxito y 0 en caso de fallo.
     public function update($idResource, $name, $description, $location, $image)
     {
-        $ok = $this->db->dataManipulation("UPDATE libros SET
-                                name = '$name',
-                                description = '$description',
-                                location = '$location',
-                                image = '$image',
-                                WHERE id = '$idResource'");
-        return $ok;
+        return $this->db->dataManipulation("UPDATE Resources SET name = '$name', description = '$description', location = '$location', image = '$image' WHERE id = $idResource");
     }
     public function delete($idResource)
     {
-        $ok = $this->db->dataManipulation("DELETE FROM Resources WHERE id = '$idResource'");
-        return $ok;
+        return $this->db->dataManipulation("DELETE FROM Resources WHERE id = '$idResource'");
+
     }
 
     // Busca un texto en las tablas de libros y autores. Devuelve un array de objetos con todos los libros

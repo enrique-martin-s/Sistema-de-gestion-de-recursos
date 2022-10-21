@@ -97,12 +97,11 @@ class ResourcesController
     // --------------------------------- BORRAR LIBROS ----------------------------------------
 
     public function deleteResource()
-    {
+    {   
         $id = $_REQUEST["id"];
         $result = $this->resource->delete($id);
         $data["resourceList"] = $this->resource->getAll();
         header("Location: index.php?controller=ResourcesController&action=showResources");
-        require_once View::render("resource/all", $data);
         /* if (Security::haySesion()) {
             $id = $_REQUEST["id"];
             $result = $this->libro->delete($id);
@@ -117,16 +116,11 @@ class ResourcesController
 
     // --------------------------------- FORMULARIO MODIFICAR LIBROS ----------------------------------------
 
-    public function formularioModificarLibro()
+    public function updateResource()
     {
-        if (Security::haySesion()) {
+        if (Security::isLogged()) {
             // Recuperamos los datos del resource a modificar
-            $data["resource"] = $this->resource->get(Security::limpiar($_REQUEST["idLibro"])[0]);
-            // Renderizamos la vista de inserción de resources, pero enviándole los datos del resource recuperado.
-            // Esa vista necesitará la lista de todos los autores y, además, la lista
-            // de los autores de este resource en concreto.
-            $data["todosLosAutores"] = $this->autor->getAll();
-            $data["autoresLibro"] = $this->autor->getAutores(Security::limpiar($_REQUEST["idLibro"]));
+            $data["resource"] = $this->resource->get(Security::limpiar($_REQUEST["id"]));
             View::render("resource/form", $data);
         } else {
             $data["error"] = "No tienes permiso para eso";
@@ -136,29 +130,36 @@ class ResourcesController
 
     // --------------------------------- MODIFICAR LIBROS ----------------------------------------
 
-    public function modificarLibro()
-    {
-        if (Security::haySesion()) {
+    public function modifyResource()
+    {   
+        if (Security::isLogged()) {
             // Primero, recuperamos todos los datos del formulario
-            $idLibro = Security::limpiar($_REQUEST["idLibro"]);
-            $titulo = Security::limpiar($_REQUEST["titulo"]);
-            $genero = Security::limpiar($_REQUEST["genero"]);
-            $pais = Security::limpiar($_REQUEST["pais"]);
-            $ano = Security::limpiar($_REQUEST["ano"]);
-            $numPaginas = Security::limpiar($_REQUEST["numPaginas"]);
-            $autores = Security::limpiar($_REQUEST["autor"]);
-
-            // Pedimos al modelo que haga el update
-            $result = $this->resource->update($idLibro, $titulo, $genero, $pais, $ano, $numPaginas);
-            if ($result == 1) {
-                $data["info"] = "Libro actualizado con éxito";
+            $origen = $_FILES['subir_archivo']['tmp_name'];
+            if($origen != null){
+                $destino = 'assets/images/'.basename($_FILES['subir_archivo']['name']);
+                if (move_uploaded_file($origen,
+                    $destino)) {
+                        $id = $_REQUEST["id"];
+                        $name = $_REQUEST["name"];
+                        $description = $_REQUEST["description"];
+                        $location = $_REQUEST["location"];
+                        $image = $destino;
+                        $result = $this->resource->update($id, $name, $description, $location, $image);        
+                    } else {
+                        echo "Error al subir el archivo";
+                    };
             } else {
-                // Si la modificación del resource ha fallado, mostramos mensaje de error
-                $data["error"] = "Ha ocurrido un error al modificar el resource. Por favor, inténtelo más tarde";
+                $id = $_REQUEST["id"];
+                $name = $_REQUEST["name"];
+                $description = $_REQUEST["description"];
+                $location = $_REQUEST["location"];
+                $image = $_REQUEST["image"];
+                echo $image;
+                $result = $this->resource->update($id, $name, $description, $location, $image);        
             }
-            $data["resourceList"] = $this->resource->getAll();
-            View::render("resource/all", $data);
-        } else {
+            var_dump($result);
+            //header("Location: index.php?controller=ResourcesController&action=showResources");
+        }else{
             $data["error"] = "No tienes permiso para eso";
             View::render("usuario/login", $data);
         }
