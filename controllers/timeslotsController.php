@@ -1,28 +1,28 @@
 <?php
 
-// CONTROLADOR DE LIBROS
-require_once("models/resources.php");  // Modelos
+
+require_once("models/timeslots.php");  // Modelos
 require_once("view.php");
 require_once("models/security.php"); // Security
 
-class ResourcesController
+class TimeslotsController
 {
     private $db;             // Conexión con la base de datos
-    private $resource, $autor;  // Modelos
+    private $timeslot, $autor;  // Modelos
 
     public function __construct()
     {
-        $this->resource = new Resource();
+        $this->timeslot = new Timeslot();
     }
 
 
-    public function showResources()
+    public function showTimeslots()
     {
-        $data["resourceList"] = $this->resource->getAll();
-        View::render("resource/all", $data);
+        $data["timeslotList"] = $this->timeslot->getAll();
+        View::render("timeslot/all", $data);
         // if (Security::haySesion()) {
-        //     $data["resourceList"] = $this->resource->getAll();
-        //     View::render("resource/all", $data);
+        //     $data["timeslotList"] = $this->timeslot->getAll();
+        //     View::render("timeslot/all", $data);
         // } else {
         //     $data["error"] = "No tienes permiso para eso";
         //     View::render("usuario/login", $data);
@@ -31,11 +31,11 @@ class ResourcesController
 
     // --------------------------------- FORMULARIO ALTA DE LIBROS ----------------------------------------
 
-    public function formAddResource()
+    public function formAddTimeslot()
     {   
-        View::render("resource/form");
+        View::render("timeslot/form");
         /* if (Security::haySesion()) {
-            View::render("resource/form", $data);
+            View::render("timeslot/form", $data);
         } else {
             $data["error"] = "No tienes permiso para eso";
             View::render("usuario/login", $data);
@@ -44,22 +44,18 @@ class ResourcesController
 
     // --------------------------------- INSERTAR LIBROS ----------------------------------------
 
-    public function insertResource()
+    public function insertTimeslot()
     {
-
-        $origen = $_FILES['subir_archivo']['tmp_name'];
-        $destino = 'assets/images/'.basename($_FILES['subir_archivo']['name']);
-        if (move_uploaded_file($origen,
-            $destino)) {
-                $name = $_REQUEST["name"];
-                $description = $_REQUEST["description"];
-                $location = $_REQUEST["location"];
-                $image = $destino;
-                $result = $this->resource->insert($name, $description, $location, $image);        
-            } else {
-                echo "Error al subir el archivo";
-            };
-        header("Location: index.php?controller=ResourcesController&action=showResources");
+        if(Security::isLogged()){
+            $dayOfWeek = Security::limpiar($_REQUEST["dayOfWeek"]);
+            $startTime = Security::limpiar($_REQUEST["startTime"]);
+            $endTime = Security::limpiar($_REQUEST["endTime"]);
+            $result = $this->timeslot->insert($dayOfWeek, $startTime, $endTime);
+            header("Location: index.php?controller=TimeslotsController&action=showTimeslots");
+        }else {
+            $data["error"] = "No tienes permiso para eso";
+            View::render("usuario/login", $data);
+        }
 
         /* if (Security::haySesion()) {
             // Primero, recuperamos todos los datos del formulario
@@ -96,12 +92,12 @@ class ResourcesController
 
     // --------------------------------- BORRAR LIBROS ----------------------------------------
 
-    public function deleteResource()
+    public function deleteTimeslot()
     {   
         $id = $_REQUEST["id"];
-        $result = $this->resource->delete($id);
-        $data["resourceList"] = $this->resource->getAll();
-        header("Location: index.php?controller=ResourcesController&action=showResources");
+        $result = $this->timeslot->delete($id);
+        $data["timeslotList"] = $this->timeslot->getAll();
+        header("Location: index.php?controller=TimeslotsController&action=showTimeslots");
         /* if (Security::haySesion()) {
             $id = $_REQUEST["id"];
             $result = $this->libro->delete($id);
@@ -116,12 +112,12 @@ class ResourcesController
 
     // --------------------------------- FORMULARIO MODIFICAR LIBROS ----------------------------------------
 
-    public function updateResource()
+    public function updateTimeslot()
     {
         if (Security::isLogged()) {
-            // Recuperamos los datos del resource a modificar
-            $data["resource"] = $this->resource->get(Security::limpiar($_REQUEST["id"]));
-            View::render("resource/form", $data);
+            // Recuperamos los datos del timeslot a modificar
+            $data["timeslot"] = $this->timeslot->get(Security::limpiar($_REQUEST["id"]));
+            View::render("timeslot/form", $data);
         } else {
             $data["error"] = "No tienes permiso para eso";
             View::render("usuario/login", $data);
@@ -130,34 +126,16 @@ class ResourcesController
 
     // --------------------------------- MODIFICAR LIBROS ----------------------------------------
 
-    public function modifyResource()
+    public function modifyTimeslot()
     {   
         if (Security::isLogged()) {
             // Primero, recuperamos todos los datos del formulario
-            $origen = $_FILES['subir_archivo']['tmp_name'];
-            if($origen != null){
-                $destino = 'assets/images/'.basename($_FILES['subir_archivo']['name']);
-                if (move_uploaded_file($origen,
-                    $destino)) {
-                        $id = $_REQUEST["id"];
-                        $name = $_REQUEST["name"];
-                        $description = $_REQUEST["description"];
-                        $location = $_REQUEST["location"];
-                        $image = $destino;
-                        $result = $this->resource->update($id, $name, $description, $location, $image);        
-                    } else {
-                        echo "Error al subir el archivo";
-                    };
-            } else {
-                $id = $_REQUEST["id"];
-                $name = $_REQUEST["name"];
-                $description = $_REQUEST["description"];
-                $location = $_REQUEST["location"];
-                $image = $_REQUEST["image"];
-                echo $image;
-                $result = $this->resource->update($id, $name, $description, $location, $image);        
-            }
-            header("Location: index.php?controller=ResourcesController&action=showResources");
+            $id = Security::limpiar($_REQUEST["id"]);
+            $dayOfWeek = Security::limpiar($_REQUEST["dayOfWeek"]);
+            $startTime = Security::limpiar($_REQUEST["startTime"]);
+            $endTime = Security::limpiar($_REQUEST["endTime"]);
+            $result = $this->timeslot->update($id, $dayOfWeek, $startTime, $endTime);
+            header("Location: index.php?controller=TimeslotsController&action=showTimeslots");
         }else{
             $data["error"] = "No tienes permiso para eso";
             View::render("usuario/login", $data);

@@ -1,7 +1,7 @@
 <?php
 
-include_once "models/user.php";
-include_once "models/resources.php";
+require_once "models/user.php";
+require_once "models/resources.php";
 
 class UserController {
 
