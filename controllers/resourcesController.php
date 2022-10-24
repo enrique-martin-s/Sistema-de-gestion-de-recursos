@@ -2,13 +2,13 @@
 
 // CONTROLADOR DE LIBROS
 require_once("models/resources.php");  // Modelos
-require_once("view.php");
+require_once("views/view.php");
 require_once("models/security.php"); // Security
 
 class ResourcesController
 {
     private $db;             // Conexión con la base de datos
-    private $resource, $autor;  // Modelos
+    private $resource;  // Modelos
 
     public function __construct()
     {

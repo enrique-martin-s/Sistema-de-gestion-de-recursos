@@ -2,7 +2,7 @@
 
 
 require_once("models/timeslots.php");  // Modelos
-require_once("view.php");
+require_once("views/view.php");
 require_once("models/security.php"); // Security
 
 class TimeslotsController
@@ -140,5 +140,15 @@ class TimeslotsController
             $data["error"] = "No tienes permiso para eso";
             View::render("usuario/login", $data);
         }
+    }
+    public function addAllTimeslots(){
+            $dayArray = ["monday", "tuesday", "wednesday", "thursday", "friday"];
+            $timeArray = ["08:05", "09:05", "10:05", "11:05", "11:35", "12:35", "13:35", "14:35"];
+              for ($j = 0; $j < count($dayArray); $j++) {
+                for ($k = 0; $k < (count($timeArray)-1); $k++) {
+                    $result = $this->timeslot->insert($dayArray[$j], $timeArray[$k], $timeArray[$k+1]);
+                }
+              }
+        header("Location: index.php?controller=TimeslotsController&action=showTimeslots");
     }
 }

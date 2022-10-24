@@ -21,14 +21,14 @@ $endTime = $timeslot->endTime ?? "00:00";
 echo "<form action = 'index.php' method = 'post' enctype='multipart/form-data'>
         <input type='hidden' name='id' value='".$id."'>
         Day of the week:
-        <select name='dayOfWeek' value='".$dayOfWeek."'>
+        <select name='dayOfWeek'id='daySelect'>
         <option value='monday'>Monday</option>
         <option value='tuesday'>Tuesday</option>
         <option value='wednesday'>Wednesday</option>
         <option value='thursday'>Thursday</option>
         <option value='friday'>Friday</option>
-        <option value='saturday'>Saturday</option>
-        <option value='sunday'>Sunday</option>
+        <option value='saturday' disabled>Saturday</option>
+        <option value='sunday' disabled>Sunday</option>
         <select/><br>
         Start time:<input type='time' name='startTime' value='".$startTime."'><br>
         End time:<input type='time' name='endTime' value='".$endTime."'><br>
@@ -42,3 +42,7 @@ if (isset($timeslot)) {
 }
 echo "	<input type='submit'></form>";
 echo "<p><a href='index.php'>Volver</a></p>";
+?>
+<script type="text/javascript">
+    document.getElementById("daySelect").value = "<?php echo $dayOfWeek; ?>";
+</script>

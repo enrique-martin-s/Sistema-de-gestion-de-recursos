@@ -1,5 +1,5 @@
 <?php
-
+include_once "./controllers/timeslotsController.php";
 // Recuperamos la lista de libros
 $timeslotList = $data["timeslotList"];
 
@@ -42,4 +42,7 @@ if (count($timeslotList) == 0) {
   }
   echo "</table>";
 }
+//echo "<p><a href='index.php?controller=timeslotsController&action=addAllTimeslots'>Añadir todos los timeslots</a></p>";
 echo "<p><a href='index.php?controller=timeslotsController&action=formAddTimeslot'>Nuevo</a></p>";
+?>
+</script>

@@ -52,6 +52,13 @@ class Security {
             return false;
         }
     }
+    public static function setRealName($data){
+        $_SESSION["realname"] = $data;
+    }
+    
+    public static function getRealName() {
+            return $_SESSION["realname"];
+    }
 
     // Limpia un texto de caracteres o palabras sospechosas. Devuelve el texto limpio.
     public static function limpiar($text) {
