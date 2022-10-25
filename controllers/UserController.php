@@ -37,15 +37,22 @@ class UserController {
     public function processFormAddUser() {
         $name = Security::limpiar($_REQUEST["username"]);
         $passwd = Security::limpiar($_REQUEST["password"]);
+        $confpasswd = Security::limpiar($_REQUEST["confpassword"]);
         $realname = Security::limpiar($_REQUEST["realname"]);
-        $result = $this->user->addUser($name, $passwd, $realname);
-        if ($result) { 
-            header("Location: index.php?controller=UserController&action=formLogin");
-            $data["info"] = "Usuario creado con éxito";
-            View::render("user/login");
-        } else {
-            $data["error"] = "Fallo al crear usuario";
-            View::render("user/login");
+        
+        if($passwd!=$confpasswd){
+            $data["error"] = "Las contraseñas no coinciden";
+            View::render("user/form", $data);
+        }else{
+            $result = $this->user->addUser($name, $passwd, $realname);
+            if ($result) { 
+                header("Location: index.php?controller=UserController&action=formLogin");
+                $data["info"] = "Usuario creado con éxito";
+                View::render("user/login");
+            } else {
+                $data["error"] = "Fallo al crear usuario";
+                View::render("user/login");
+            }
         }
     }
 
