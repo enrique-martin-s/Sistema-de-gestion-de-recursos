@@ -23,8 +23,10 @@ class UserController {
         $passwd = Security::limpiar($_REQUEST["password"]);
         $result = $this->user->login($name, $passwd);
          if ($result) {
-            header("Location: index.php?controller=ReservationController&action=showReservations");
             Security::setLogged(true);
+            $userInfo = $this->user->get($_SESSION["idUser"]);
+            Security::setType($userInfo->type);
+            header("Location: index.php?controller=ReservationController&action=showReservations");
         } else {
             $data["error"] = "User o contraseña incorrectos";
             View::render("user/login", $data);
@@ -32,7 +34,7 @@ class UserController {
     }
 
     public function formAddUser() {
-        View::render("user/form");
+        View::render("user/registerForm");
     }
     public function processFormAddUser() {
         $name = Security::limpiar($_REQUEST["username"]);
@@ -65,6 +67,23 @@ class UserController {
         header("Location: index.php");
         View::render("user/login", $data);
 
+    }
+    public function showUsers() {
+        $data["userList"] = $this->user->getAll();
+        View::render("user/all", $data);
+    }
+
+    public function deleteUser()
+    {   
+        $id = $_REQUEST["id"];
+        $result = $this->user->delete($id);
+        $data["userList"] = $this->user->getAll();
+        header("Location: index.php?controller=UserController&action=showUsers");
+    }
+    public function updateUser() {
+        $id = $_REQUEST["id"];
+        $data["user"] = $this->user->get($id);
+        View::render("user/updateForm", $data);
     }
  
 }

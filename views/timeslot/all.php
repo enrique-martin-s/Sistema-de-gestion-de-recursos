@@ -25,24 +25,53 @@ if (count($timeslotList) == 0) {
   echo "<table border ='1'>";
   echo "<thead>
             <tr>
-              <th>Day</th>
-              <th>Start time</th>
-              <th>End time</th>
-              <th colspan='2'>Actions</th>
-            </tr>
+              <th>Día</th>
+              <th>Hora de inicio</th>
+              <th>Hora de fin</th>";
+              if (Security::getType() == "admin") {
+                echo "<th colspan='2'>Actions</th>";
+                }
+            "</tr>
           </thead>";
+  $counter = 0;
+  $day = "";
   foreach ($timeslotList as $fila) {
-    echo "<tr>";
-    echo "<td>" . $fila->dayOfWeek . "</td>";
-    echo "<td>" . $fila->startTime . "</td>";
-    echo "<td>" . $fila->endTime . "</td>";
-    echo "<td><a href='index.php?controller=timeslotsController&action=updateTimeslot&id=" . $fila->id. "'>Modificar</a></td>";
-    echo "<td><a href='index.php?controller=timeslotsController&action=deleteTimeslot&id=" . $fila->id . "'>Borrar</a></td>";
+    if($day!=$fila->dayOfWeek){
+      $counter=0;
+      echo "<tr >";
+      echo "<td name=".$fila->dayOfWeek." rowspan='1'>".$fila->dayOfWeek."</td>";
+    }else{
+      echo "<tr >";
+      ?>
+        <script>
+          var row = document.getElementsByName("<?php echo $fila->dayOfWeek ?>");
+          row[0].rowSpan = row[0].rowSpan + 1;
+        </script>
+      <?php
+
+    }
+    echo "<td>".$fila->startTime."</td>";
+    echo "<td>".$fila->endTime."</td>";
+    if (Security::getType() == "admin") {
+      echo "<td><button onclick='modificar(".$fila->id.")'>Modificar</button></td>";
+      echo "<td><button onclick='confirmarBorrado(".$fila->id.")'>Borrar</button></td>";
+    }
     echo "</tr>";
+    $day=$fila->dayOfWeek;
   }
   echo "</table>";
+
 }
 //echo "<p><a href='index.php?controller=timeslotsController&action=addAllTimeslots'>Añadir todos los timeslots</a></p>";
 echo "<p><a href='index.php?controller=timeslotsController&action=formAddTimeslot'>Nuevo</a></p>";
 ?>
+<script>
+  function confirmarBorrado(id) {
+  if (confirm("¿Estás seguro de que quieres borrar este recurso?")) {
+    window.location.href = "index.php?controller=TimeslotsController&action=deleteTimeslot&id="+id;
+  }
+}
+function modificar(id) {
+  window.location.href = "index.php?controller=TimeslotsController&action=updateTimeslot&id="+id;
+}
 </script>

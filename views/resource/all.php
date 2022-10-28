@@ -29,9 +29,11 @@ if (count($resourceList) == 0) {
               <th>Name</th>
               <th>Description</th>
               <th>Location</th>
-              <th>Image</th>
-              <th colspan='2'>Actions</th>
-            </tr>
+              <th>Image</th>";
+              if (Security::getType() == "admin") {
+                echo "<th colspan='2'>Actions</th>";
+                }
+            "</tr>
           </thead>";
   foreach ($resourceList as $fila) {
     echo "<tr>";
@@ -39,8 +41,10 @@ if (count($resourceList) == 0) {
     echo "<td>" . $fila->description . "</td>";
     echo "<td>" . $fila->location . "</td>";
     echo "<td><img src='" . $fila->image . "' alt='imagen_recurso' width='100px' ></td>";
-    echo "<td><a href='index.php?controller=resourcesController&action=updateResource&id=" . $fila->id. "'>Modificar</a></td>";
-    echo "<td><button onclick='confirmarBorrado(".$fila->id.")'>Borrar</button></td>";
+    if (Security::getType() == "admin") {
+      echo "<td><button onclick='modificar(".$fila->id.")'>Modificar</button></td>";
+      echo "<td><button onclick='confirmarBorrado(".$fila->id.")'>Borrar</button></td>";
+    }
     echo "</tr>";
   }
   echo "</table>";
@@ -52,5 +56,8 @@ function confirmarBorrado(id) {
   if (confirm("¿Estás seguro de que quieres borrar este recurso?")) {
     window.location.href = "index.php?controller=resourcesController&action=deleteResource&id="+id;
   }
+}
+function modificar(id) {
+  window.location.href = "index.php?controller=resourcesController&action=updateResource&id="+id;
 }
 </script>

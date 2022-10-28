@@ -41,7 +41,7 @@ if (isset($timeslot)) {
     echo "  <input type='hidden' name='action' value='insertTimeslot'>";
 }
 echo "	<input type='submit'></form>";
-echo "<p><a href='index.php'>Volver</a></p>";
+echo "<p><a href='index.php?controller=TimeslotsController&action=showTimeslots'>Volver</a></p>";
 ?>
 <script type="text/javascript">
     document.getElementById("daySelect").value = "<?php echo $dayOfWeek; ?>";

@@ -38,4 +38,4 @@ if (isset($resource)) {
     echo "  <input type='hidden' name='action' value='insertResource'>";
 }
 echo "	<input type='submit'></form>";
-echo "<p><a href='index.php'>Volver</a></p>";
+echo "<p><a href='index.php?controller=resourcesController&action=showResources'>Volver</a></p>";

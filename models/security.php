@@ -13,7 +13,6 @@ class Security {
     // Abre una sesión y guarda el id del usuario
     public static function iniciarSesion($id) {
         $_SESSION["idUser"] = $id;
-        echo $id;
     }
 
     // Cierra una sesión y elimina el id del usuario
@@ -47,6 +46,18 @@ class Security {
     public static function isLogged() {
         if (isset($_SESSION["valid"])) {
             return true;
+        }
+        else {
+            return false;
+        }
+    }
+    public static function setType($data){
+        $_SESSION["type"] = $data;
+    }
+
+    public static function getType() {
+        if (isset($_SESSION["type"])) {
+            return $_SESSION["type"];
         }
         else {
             return false;

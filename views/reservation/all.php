@@ -1,6 +1,7 @@
 <?php
 
 $reservations = $data["reservations"];
+$reservationList = $data["reservationList"];
 
 if (isset($data["info"])) {
   echo "<div style='color:blue'>".$data["info"]."</div>";
@@ -29,21 +30,36 @@ if (count($reservations) == 0) {
               <th>Timeslot start</th>
               <th>Timeslot end</th>
               <th>Date</th>
-              <th>Remarks</th>
-            </tr>
+              <th>Remarks</th>";
+              echo "<th colspan='2'>Actions</th>";
+            echo "</tr>
           </thead>";
-  foreach ($reservations as $reserve) {
-    print_r($reserve);
+  foreach ($reservations as $key=>$reserve) {
     echo "<tr>";
     echo "<td>" . $reserve["resource"]->name . "</td>";
     echo "<td><img src='" . $reserve["resource"]->image . "' alt='imagen_recurso' width='100px' ></td>";
     echo "<td>" . $reserve["user"]->realname . "</td>";
     echo "<td>" .$reserve["timeslot"]->startTime ."</td>";
     echo "<td>" .$reserve["timeslot"]->endTime ."</td>";
-    echo "<td><a href='index.php?controller=reservationsController&action=updateReservation&id=" . $reservations>id. "'>Modificar</a></td>";
-    echo "<td><a href='index.php?controller=reservationsController&action=deleteReservation&id=" . $reservations->id . "'>Borrar</a></td>";
+    echo "<td>" .$reservationList[$key]->date ."</td>";
+    echo "<td>" .$reservationList[$key]->remarks ."</td>";
+    if (Security::getType() == "admin" || $_SESSION["idUser"] == $reserve["user"]->id) {
+      echo "<td><button onclick(" . $reservations->id. ")>Modificar</button></td>";
+    echo "<td><button onclick(" . $reservations->id . ")>Borrar</button></td>";
+    }
     echo "</tr>";
   }
   echo "</table>";
 }
 echo "<p><a href='index.php?controller=reservationsController&action=formAddReservation'>Nuevo</a></p>";
+?>
+<script>
+  function confirmarBorrado(id) {
+  if (confirm("¿Estás seguro de que quieres borrar este recurso?")) {
+    window.location.href = "href='index.php?controller=reservationsController&action=updateReservation&id="+id;
+  }
+}
+function modificar(id) {
+  window.location.href = 'index.php?controller=reservationsController&action=deleteReservation&id='+id;
+}
+</script>
