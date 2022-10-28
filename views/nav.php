@@ -3,7 +3,7 @@
     Menú de navegación: 
     <?php
         if (Security::isLogged()) {
-            echo "<a href='index.php?controller=ResourcesController&action=showResources'>Home</a>";
+            echo "<a href='index.php?controller=ReservationController&action=showReservations'>Home</a>";
         }else
             echo "<a href='index.php'>Home</a>";
     

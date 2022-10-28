@@ -40,9 +40,17 @@ if (count($resourceList) == 0) {
     echo "<td>" . $fila->location . "</td>";
     echo "<td><img src='" . $fila->image . "' alt='imagen_recurso' width='100px' ></td>";
     echo "<td><a href='index.php?controller=resourcesController&action=updateResource&id=" . $fila->id. "'>Modificar</a></td>";
-    echo "<td><a href='index.php?controller=resourcesController&action=deleteResource&id=" . $fila->id . "'>Borrar</a></td>";
+    echo "<td><button onclick='confirmarBorrado(".$fila->id.")'>Borrar</button></td>";
     echo "</tr>";
   }
   echo "</table>";
 }
 echo "<p><a href='index.php?controller=resourcesController&action=formAddResource'>Nuevo</a></p>";
+?>
+<script type="text/javascript">
+function confirmarBorrado(id) {
+  if (confirm("¿Estás seguro de que quieres borrar este recurso?")) {
+    window.location.href = "index.php?controller=resourcesController&action=deleteResource&id="+id;
+  }
+}
+</script>

@@ -25,6 +25,11 @@ class User extends Model
             return false;
         }
     }
+    public function get($id)
+    {
+        $result = $this->db->dataQuery("SELECT * FROM Users WHERE id = $id");
+        return $result[0];
+    }
 
     // Cierra una sesión (destruye variables de sesión)
     public function cerrarSesion() {

@@ -9,7 +9,7 @@
         foreach (glob("controllers/*.php") as $file) {
             include $file;
         }
-
+        
         // Miramos el valor de la variable "controller", si existe. Si no, le asignamos un controlador por defecto
         if (isset($_REQUEST["controller"])) {
             $controller = $_REQUEST["controller"];

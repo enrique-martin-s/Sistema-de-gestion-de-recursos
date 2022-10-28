@@ -12,6 +12,5 @@ echo "<form action = 'index.php' method = 'get'>
         <input type='hidden' name='controller' value='UserController'>
         <input type='hidden' name='action' value='processFormAddUser'>";  
 
-
 echo "	<input type='submit'></form>";
 echo "<p><a href='index.php'>Volver</a></p>";

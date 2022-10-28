@@ -18,35 +18,32 @@ class ResourcesController
 
     public function showResources()
     {
+        if(Security::isLogged()){
         $data["resourceList"] = $this->resource->getAll();
         View::render("resource/all", $data);
-        // if (Security::haySesion()) {
-        //     $data["resourceList"] = $this->resource->getAll();
-        //     View::render("resource/all", $data);
-        // } else {
-        //     $data["error"] = "No tienes permiso para eso";
-        //     View::render("usuario/login", $data);
-        // }
+        } else {
+            $data["error"] = "No tienes permiso para eso";
+            View::render("user/login", $data);
+        }
     }
 
     // --------------------------------- FORMULARIO ALTA DE LIBROS ----------------------------------------
 
     public function formAddResource()
     {   
-        View::render("resource/form");
-        /* if (Security::haySesion()) {
-            View::render("resource/form", $data);
+        if(Security::isLogged()){
+            View::render("resource/form");
         } else {
             $data["error"] = "No tienes permiso para eso";
-            View::render("usuario/login", $data);
-        } */
+            View::render("user/login", $data);
+        }
     }
 
     // --------------------------------- INSERTAR LIBROS ----------------------------------------
 
     public function insertResource()
     {
-
+        if(Security::isLogged()){
         $origen = $_FILES['subir_archivo']['tmp_name'];
         $destino = 'assets/images/'.basename($_FILES['subir_archivo']['name']);
         if (move_uploaded_file($origen,
@@ -61,56 +58,25 @@ class ResourcesController
             };
         header("Location: index.php?controller=ResourcesController&action=showResources");
 
-        /* if (Security::haySesion()) {
-            // Primero, recuperamos todos los datos del formulario
-            $titulo = Security::limpiar($_REQUEST["titulo"]);
-            $genero = Security::limpiar($_REQUEST["genero"]);
-            $pais = Security::limpiar($_REQUEST["pais"]);
-            $ano = Security::limpiar($_REQUEST["ano"]);
-            $numPaginas = Security::limpiar($_REQUEST["numPaginas"]);
-            $autores = Security::limpiar($_REQUEST["autor"]);
-
-            $result = $this->libro->insert($titulo, $genero, $pais, $ano, $numPaginas);
-            if ($result == 1) {
-                // Si la inserción del libro ha funcionado, continuamos insertando los autores, pero
-                // necesitamos conocer el id del libro que acabamos de insertar
-                $idLibro = $this->libro->getMaxId();
-                // Ya podemos insertar todos los autores junto con el libro en "escriben"
-                $result = $this->libro->insertAutores($idLibro, $autores);
-                if ($result > 0) {
-                    $data["info"] = "Libro insertado con éxito";
-                } else {
-                    $data["error"] = "Error al insertar los autores del libro";
-                }
-            } else {
-                // Si la inserción del libro ha fallado, mostramos mensaje de error
-                $data["error"] = "Error al insertar el libro";
-            }
-            $data["listaLibros"] = $this->libro->getAll();
-            View::render("libro/all", $data);
-        } else {
-            $data["error"] = "No tienes permiso para eso";
-            View::render("usuario/login", $data);
-        } */
+    } else {
+        $data["error"] = "No tienes permiso para eso";
+        View::render("user/login", $data);
+    }
     }
 
     // --------------------------------- BORRAR LIBROS ----------------------------------------
 
     public function deleteResource()
     {   
-        $id = $_REQUEST["id"];
-        $result = $this->resource->delete($id);
-        $data["resourceList"] = $this->resource->getAll();
-        header("Location: index.php?controller=ResourcesController&action=showResources");
-        /* if (Security::haySesion()) {
+        if(Security::isLogged()){
             $id = $_REQUEST["id"];
-            $result = $this->libro->delete($id);
-            $data["listaLibros"] = $this->libro->getAll();
-            View::render("libro/all", $data);
+            $result = $this->resource->delete($id);
+            $data["resourceList"] = $this->resource->getAll();
+            header("Location: index.php?controller=ResourcesController&action=showResources");
         } else {
             $data["error"] = "No tienes permiso para eso";
-            View::render("usuario/login", $data);
-        } */
+            View::render("user/login", $data);
+        }
     }
     
 

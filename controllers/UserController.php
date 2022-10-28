@@ -22,8 +22,8 @@ class UserController {
         $name = Security::limpiar($_REQUEST["username"]);
         $passwd = Security::limpiar($_REQUEST["password"]);
         $result = $this->user->login($name, $passwd);
-        if ($result) { 
-            header("Location: index.php?controller=ResourcesController&action=showResources");
+         if ($result) {
+            header("Location: index.php?controller=ReservationController&action=showReservations");
             Security::setLogged(true);
         } else {
             $data["error"] = "User o contraseña incorrectos";
