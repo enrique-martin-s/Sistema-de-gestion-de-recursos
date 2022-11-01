@@ -27,6 +27,16 @@ class ResourcesController
         }
     }
 
+    public function searchResource(){
+        if(Security::isLogged()){
+        $data["resourceList"] = $this->resource->search($_POST["textoBusqueda"]);
+        View::render("resource/all", $data);
+        } else {
+            $data["error"] = "No tienes permiso para eso";
+            View::render("user/login", $data);
+        }
+    }
+
     // --------------------------------- FORMULARIO ALTA DE LIBROS ----------------------------------------
 
     public function formAddResource()

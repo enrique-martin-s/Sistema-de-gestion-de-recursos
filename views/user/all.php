@@ -12,8 +12,9 @@ if (isset($data["error"])) {
   echo "<div style='color:red'>".$data["error"]."</div>";
 }
 
-echo "<form action='index.php'>
-        <input type='hidden' name='action' value='buscarLibros'>
+echo "<form action='index.php' method='post'>
+        <input type='hidden' name='controller' value='UserController'>
+        <input type='hidden' name='action' value='searchUsers'>
         <input type='text' name='textoBusqueda'>
         <input type='submit' value='Buscar'>
       </form><br>";
@@ -37,13 +38,13 @@ if (count($userList) == 0) {
     echo "<td>".$fila->realname."</td>";
     echo "<td>".$fila->type."</td>";
     echo "<td><button onclick='modificar(".$fila->id.")'>Modificar</button></td>";
-    echo "<td><button onclick='confirmarBorrado(".$fila->id.",".Security::getIdUsuario().")' >Borrar</button></td>";
+    echo "<td><button onclick='confirmarBorrado(".$fila->id.",".Security::getUserId().")' >Borrar</button></td>";
     echo "</tr>";
   }
   echo "</table>";
 }
-//echo "<p><a href='index.php?controller=timeslotsController&action=addAllTimeslots'>Añadir todos los timeslots</a></p>";
-echo "<p><a href='index.php?controller=timeslotsController&action=formAddTimeslot'>Nuevo</a></p>";
+
+echo "<p><a href='index.php?controller=UserController&action=formAddUser'>Nuevo</a></p>";
 ?>
 <script>
   function confirmarBorrado(id , sessionId) {
@@ -56,6 +57,6 @@ echo "<p><a href='index.php?controller=timeslotsController&action=formAddTimeslo
   }
 }
 function modificar(id) {
-  window.location.href = "index.php?controller=UserController&action=updateUser&id="+id;
+  window.location.href = "index.php?controller=UserController&action=updateUserForm&id="+id;
 }
 </script>

@@ -21,7 +21,7 @@ class Security {
     }
 
     // Devuelve el id del usuario que inició la sesión
-    public static function getIdUsuario() {
+    public static function getUserId() {
         if (isset($_SESSION["idUser"])) {
             return $_SESSION["idUser"];
         } else {

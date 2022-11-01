@@ -25,7 +25,13 @@ class ReservationController
 
     public function showReservations()
     {
-        $data["reservationList"] = $this->reservation->getAll();
+        if(Security::isLogged()){
+            if(Security::getType()=="admin"){
+                $data["reservationList"] = $this->reservation->getAll();
+            }else{
+                $data["reservationList"] = $this->reservation->getUserReservations(Security::getUserId());
+            }
+        
         $reservationList = $data["reservationList"];
         if($reservationList != null){
             foreach ($reservationList as $key=>$reservation) {
@@ -35,99 +41,88 @@ class ReservationController
             }
         }
         View::render("reservation/all", $data);
-        // if (Security::haySesion()) {
-        //     $data["reservationList"] = $this->reservation->getAll();
-        //     View::render("reservation/all", $data);
-        // } else {
-        //     $data["error"] = "No tienes permiso para eso";
-        //     View::render("usuario/login", $data);
-        // }
+        }else{
+            $data["error"] = "No tienes permiso para eso";
+            View::render("user/login", $data);
+        }
+    }
+    public function showDay(){
+        if(Security::isLogged()){
+            $idResource = Security::limpiar($_REQUEST["resource"]);
+            $date = date("Y-m-d");
+            $data["reservationList"] = $this->reservation->getResourceReservations($idResource, $date);
+            $data["timeslots"] = $this->timeslot->getDayAllSlots(date('l', strtotime($date)));
+            print_r($data["reservationList"]);
+        }else{
+            $data["error"] = "No tienes permiso para eso";
+            View::render("user/login", $data);
+        }
+    }
+    public function showCalendar(){
+        if(Security::isLogged()){
+            $data["resourceList"] = $this->resource->getAll();
+            View::render("reservation/calendar", $data);
+        }else{
+            $data["error"] = "No tienes permiso para eso";
+            View::render("user/login", $data);
+        }
     }
 
     // --------------------------------- FORMULARIO ALTA DE LIBROS ----------------------------------------
 
     public function formAddReservation()
     {   
-        View::render("reservation/form");
-        /* if (Security::haySesion()) {
+        if(Security::isLogged()){
+            $data["resourceList"] = $this->resource->getAll();
             View::render("reservation/form", $data);
-        } else {
+        }else{
             $data["error"] = "No tienes permiso para eso";
-            View::render("usuario/login", $data);
-        } */
+            View::render("user/login", $data);
+        }
     }
 
     // --------------------------------- INSERTAR LIBROS ----------------------------------------
-
+    public function availableSlots(){
+        $idResource = $_POST["resourceSelect"];
+        $date = $_POST["datePicker"];
+        $dayOfWeek = date("l", strtotime($date));
+        $data["timeslotList"] = $this->timeslot->getAvailableDaySlots($idResource, $date, $dayOfWeek);
+        $data["resource"] = $this->resource->get($idResource);
+        $data["date"] = $date;
+        View::render("reservation/available", $data);
+    }
     public function insertReservation()
     {
         if(Security::isLogged()){
-            $dayOfWeek = Security::limpiar($_REQUEST["dayOfWeek"]);
-            $startTime = Security::limpiar($_REQUEST["startTime"]);
-            $endTime = Security::limpiar($_REQUEST["endTime"]);
-            $result = $this->reservation->insert($dayOfWeek, $startTime, $endTime);
-            header("Location: index.php?controller=ReservationsController&action=showReservations");
+            $idResource = Security::limpiar($_REQUEST["idResource"]);
+            $idTimeslot = Security::limpiar($_REQUEST["idTimeslot"]);
+            $idUser = Security::limpiar($_SESSION["idUser"]);
+            $date = Security::limpiar($_REQUEST["date"]);
+            $remarks = Security::limpiar($_REQUEST["remarks"]);
+            $result = $this->reservation->insert($idResource, $idTimeslot, $idUser, $date, $remarks);
+            header("Location: index.php?controller=reservationController&action=showReservations");
         }else {
             $data["error"] = "No tienes permiso para eso";
             View::render("usuario/login", $data);
         }
-
-        /* if (Security::haySesion()) {
-            // Primero, recuperamos todos los datos del formulario
-            $titulo = Security::limpiar($_REQUEST["titulo"]);
-            $genero = Security::limpiar($_REQUEST["genero"]);
-            $pais = Security::limpiar($_REQUEST["pais"]);
-            $ano = Security::limpiar($_REQUEST["ano"]);
-            $numPaginas = Security::limpiar($_REQUEST["numPaginas"]);
-            $autores = Security::limpiar($_REQUEST["autor"]);
-
-            $result = $this->libro->insert($titulo, $genero, $pais, $ano, $numPaginas);
-            if ($result == 1) {
-                // Si la inserción del libro ha funcionado, continuamos insertando los autores, pero
-                // necesitamos conocer el id del libro que acabamos de insertar
-                $idLibro = $this->libro->getMaxId();
-                // Ya podemos insertar todos los autores junto con el libro en "escriben"
-                $result = $this->libro->insertAutores($idLibro, $autores);
-                if ($result > 0) {
-                    $data["info"] = "Libro insertado con éxito";
-                } else {
-                    $data["error"] = "Error al insertar los autores del libro";
-                }
-            } else {
-                // Si la inserción del libro ha fallado, mostramos mensaje de error
-                $data["error"] = "Error al insertar el libro";
-            }
-            $data["listaLibros"] = $this->libro->getAll();
-            View::render("libro/all", $data);
-        } else {
-            $data["error"] = "No tienes permiso para eso";
-            View::render("usuario/login", $data);
-        } */
     }
 
     // --------------------------------- BORRAR LIBROS ----------------------------------------
 
     public function deleteReservation()
     {   
-        $id = $_REQUEST["id"];
-        $result = $this->reservation->delete($id);
-        $data["reservationList"] = $this->reservation->getAll();
-        header("Location: index.php?controller=ReservationsController&action=showReservations");
-        /* if (Security::haySesion()) {
-            $id = $_REQUEST["id"];
-            $result = $this->libro->delete($id);
-            $data["listaLibros"] = $this->libro->getAll();
-            View::render("libro/all", $data);
-        } else {
-            $data["error"] = "No tienes permiso para eso";
-            View::render("usuario/login", $data);
-        } */
+        if(Security::isLogged()){
+            $id = Security::limpiar($_REQUEST["id"]);
+            $result = $this->reservation->delete($id);
+            $data["reservationList"] = $this->reservation->getAll();
+            header("Location: index.php?controller=ReservationController&action=showReservations");
+        }
     }
     
 
     // --------------------------------- FORMULARIO MODIFICAR LIBROS ----------------------------------------
 
-    public function updateReservation()
+    public function updateFormReservation()
     {
         if (Security::isLogged()) {
             // Recuperamos los datos del reservation a modificar
@@ -150,20 +145,10 @@ class ReservationController
             $startTime = Security::limpiar($_REQUEST["startTime"]);
             $endTime = Security::limpiar($_REQUEST["endTime"]);
             $result = $this->reservation->update($id, $dayOfWeek, $startTime, $endTime);
-            header("Location: index.php?controller=ReservationsController&action=showReservations");
+            header("Location: index.php?controller=ReservationController&action=showReservations");
         }else{
             $data["error"] = "No tienes permiso para eso";
             View::render("usuario/login", $data);
         }
-    }
-    public function addAllReservations(){
-            $dayArray = ["monday", "tuesday", "wednesday", "thursday", "friday"];
-            $timeArray = ["08:05", "09:05", "10:05", "11:05", "11:35", "12:35", "13:35", "14:35"];
-              for ($j = 0; $j < count($dayArray); $j++) {
-                for ($k = 0; $k < (count($timeArray)-1); $k++) {
-                    $result = $this->reservation->insert($dayArray[$j], $timeArray[$k], $timeArray[$k+1]);
-                }
-              }
-        header("Location: index.php?controller=ReservationsController&action=showReservations");
     }
 }

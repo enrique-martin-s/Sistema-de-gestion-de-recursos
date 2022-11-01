@@ -33,11 +33,21 @@ class User extends Model
 
     // Cierra una sesión (destruye variables de sesión)
     public function cerrarSesion() {
-        Security::cerrarSesion();
+        Security::closeSession();
     }
 
     public function addUser($username, $passwd, $realname) {
         $result = $this->db->dataManipulation("INSERT INTO Users (username, password, realname, type) VALUES ('$username', '$passwd', '$realname', 'user')");
+        return $result;
+    }
+
+    public function updateUser($id, $username, $passwd, $realname) {
+        $result = $this->db->dataManipulation("UPDATE Users SET username='$username', password='$passwd', realname='$realname' WHERE id=$id");
+        return $result;
+    }
+    
+    public function search($username) {
+        $result = $this->db->dataQuery("SELECT * FROM Users WHERE username LIKE '%$username%' OR realname LIKE '%$username%' OR type LIKE '%$username%'");
         return $result;
     }
 }

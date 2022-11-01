@@ -3,6 +3,23 @@ include_once "./controllers/timeslotsController.php";
 // Recuperamos la lista de libros
 $timeslotList = $data["timeslotList"];
 
+$col  = 'dayOfWeek';
+$order = array(
+  'monday',
+  'tuesday',
+  'wednesday',
+  'thursday',
+  'friday'
+);
+
+
+//ordeno los slots por dia de la semana en caso de que se hayan añadido nuevos
+usort($timeslotList, function($a, $b) use ($col, $order) {
+  $pos_a = array_search($a->dayOfWeek, $order);
+  $pos_b = array_search($b->dayOfWeek, $order);
+  return $pos_a - $pos_b;
+});
+
 // Si hay algún mensaje de feedback, lo mostramos
 if (isset($data["info"])) {
   echo "<div style='color:blue'>".$data["info"]."</div>";
@@ -11,12 +28,6 @@ if (isset($data["info"])) {
 if (isset($data["error"])) {
   echo "<div style='color:red'>".$data["error"]."</div>";
 }
-
-echo "<form action='index.php'>
-        <input type='hidden' name='action' value='buscarLibros'>
-        <input type='text' name='textoBusqueda'>
-        <input type='submit' value='Buscar'>
-      </form><br>";
 
 // Ahora, la tabla con los datos de los libros
 if (count($timeslotList) == 0) {
@@ -62,6 +73,7 @@ if (count($timeslotList) == 0) {
   echo "</table>";
 
 }
+// Linea usada para añadir todos los slots por defecto.
 //echo "<p><a href='index.php?controller=timeslotsController&action=addAllTimeslots'>Añadir todos los timeslots</a></p>";
 echo "<p><a href='index.php?controller=timeslotsController&action=formAddTimeslot'>Nuevo</a></p>";
 ?>

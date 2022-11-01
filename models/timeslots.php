@@ -63,4 +63,16 @@ class Timeslot extends Model
         $result = $this->db->dataQuery("SELECT * FROM Timeslots WHERE name LIKE '%$textoBusqueda%' OR description LIKE '%$textoBusqueda%'");
         return $result;
     }
+    public function getAvailableDaySlots($resourceId, $date, $dayOfWeek)
+    {
+        $result = $this->db->dataQuery("SELECT * FROM Timeslots WHERE dayOfWeek = '$dayOfWeek' AND id NOT IN (SELECT idTimeslot FROM Reservations WHERE idResource = '$resourceId' AND date = '$date')");
+        return $result;
+    }
+
+    public function getDayAllSlots($dayOfWeek)
+    {
+        $result = $this->db->dataQuery("SELECT * FROM Timeslots WHERE dayOfWeek = '$dayOfWeek'");
+        return $result;
+    }
+
 }

@@ -56,13 +56,3 @@ if (count($reservations) == 0) {
 }
 echo "<p><a href='index.php?controller=reservationController&action=formAddReservation'>Nuevo</a></p>";
 ?>
-<script>
-  function confirmarBorrado(id) {
-  if (confirm("¿Estás seguro de que quieres borrar esta reserva?")) {
-    window.location.href = "index.php?controller=reservationController&action=deleteReservation&id="+id;
-  }
-}
-function modificar(id) {
-  window.location.href = 'index.php?controller=reservationController&action=updateReservation&id='+id;
-}
-</script>

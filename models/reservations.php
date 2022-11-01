@@ -12,17 +12,24 @@ class Reservation extends Model
         $this->idColumn = "id";
         parent::__construct();
     }
-
-
-    public function getMaxId()
-    {
-        $result = $this->db->dataQuery("SELECT MAX(id) AS lastId FROM Reservations");
-        return $result[0]->lastId;
+    public function getResourceReservations($idResource, $date){
+        $sql = "SELECT * FROM $this->table WHERE idResource = $idResource AND date = '$date'";
+        $result = $this->db->dataQuery($sql);
+        $reservations = array();
+        foreach ($result as $reservation) {
+            $reservations[] = $reservation;
+        }
+        return $reservations; 
     }
 
-    public function insert($dayOfWeek, $startTime, $endTime)
+    public function getUserReservations($idUser){
+        $result = $this->db->dataQuery("SELECT * FROM Reservations WHERE idUser = $idUser");
+        return $result;
+    }
+
+    public function insert($idResource, $idTimeslot, $idUser, $date, $remarks)
     {
-        $result = $this->db->dataManipulation("INSERT INTO Reservations (dayOfWeek, startTime, endTime) VALUES ('$dayOfWeek', '$startTime', '$endTime')");
+        $result = $this->db->dataManipulation("INSERT INTO Reservations (idResource, idTimeslot, idUser, date, remarks) VALUES ('$idResource', '$idTimeslot', '$idUser', '$date', '$remarks')");
         return $result;
     }
 

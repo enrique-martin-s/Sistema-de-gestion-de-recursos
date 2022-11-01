@@ -107,7 +107,8 @@ class TimeslotsController
             $timeArray = ["08:05", "09:05", "10:05", "11:05", "11:35", "12:35", "13:35", "14:35"];
               for ($j = 0; $j < count($dayArray); $j++) {
                 for ($k = 0; $k < (count($timeArray)-1); $k++) {
-                    $result = $this->timeslot->insert($dayArray[$j], $timeArray[$k], $timeArray[$k+1]);
+                    if($timeArray[$k] != "11:05")
+                        $result = $this->timeslot->insert($dayArray[$j], $timeArray[$k], $timeArray[$k+1]);
                 }
               }
         header("Location: index.php?controller=TimeslotsController&action=showTimeslots");

@@ -47,10 +47,13 @@ class UserController {
             View::render("user/form", $data);
         }else{
             $result = $this->user->addUser($name, $passwd, $realname);
-            if ($result) { 
-                header("Location: index.php?controller=UserController&action=formLogin");
+            if ($result) { // Si se ha insertado correctamente
                 $data["info"] = "Usuario creado con éxito";
-                View::render("user/login");
+                if(Security::isLogged()){
+                    $this->showUsers();
+                }else{
+                    View::render("user/login");
+                }
             } else {
                 $data["error"] = "Fallo al crear usuario";
                 View::render("user/login");
@@ -69,21 +72,73 @@ class UserController {
 
     }
     public function showUsers() {
+        if(Security::isLogged() && Security::getType() == "admin"){
         $data["userList"] = $this->user->getAll();
         View::render("user/all", $data);
+        } else {
+            $data["error"] = "No tienes permiso para eso";
+            View::render("user/login", $data);
+        }
+    }
+    public function searchUsers(){
+        if(Security::isLogged() && Security::getType() == "admin"){
+        $data["userList"] = $this->user->search($_POST["textoBusqueda"]);
+        View::render("user/all", $data);
+        } else {
+            $data["error"] = "No tienes permiso para eso";
+            View::render("user/login", $data);
+        }
     }
 
     public function deleteUser()
     {   
+        if(Security::isLogged() && Security::getType() == "admin"){
         $id = $_REQUEST["id"];
         $result = $this->user->delete($id);
         $data["userList"] = $this->user->getAll();
         header("Location: index.php?controller=UserController&action=showUsers");
+        } else {
+            $data["error"] = "No tienes permiso para eso";
+            View::render("user/login", $data);
+        }
     }
-    public function updateUser() {
+    public function updateUserForm() {
+        if(Security::isLogged() && Security::getType() == "admin"){
         $id = $_REQUEST["id"];
         $data["user"] = $this->user->get($id);
-        View::render("user/updateForm", $data);
+        View::render("user/registerForm", $data);
+        } else {
+            $data["error"] = "No tienes permiso para eso";
+            View::render("user/login", $data);
+        }
+    }
+
+    public function updateUser() {
+        if(Security::isLogged() && Security::getType() == "admin"){
+        $id = $_REQUEST["id"];
+        $name = Security::limpiar($_REQUEST["username"]);
+        $passwd = Security::limpiar($_REQUEST["password"]);
+        $confpasswd = Security::limpiar($_REQUEST["confpassword"]);
+        $realname = Security::limpiar($_REQUEST["realname"]);
+        if($passwd!=$confpasswd){
+            $data["error"] = "Las contraseñas no coinciden";
+            $data["user"] = $this->user->get($id);
+            View::render("user/registerForm", $data);
+        }else{
+            $result = $this->user->updateUser($id, $name, $passwd, $realname);
+            if ($result) { // Si se ha insertado correctamente
+                $data["info"] = "Usuario actualizado con éxito";
+                $data["userList"] = $this->user->getAll();
+                View::render("user/all", $data);
+            } else {
+                $data["error"] = "Fallo al actualizar usuario";
+                View::render("user/form", $data);
+            }
+        }
+        } else {
+            $data["error"] = "No tienes permiso para eso";
+            View::render("user/login", $data);
+        }
     }
  
 }
