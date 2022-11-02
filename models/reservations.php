@@ -45,11 +45,12 @@ class Reservation extends Model
     // }
 
     // Actualiza un Reservation . Devuelve 1 si tiene éxito y 0 en caso de fallo.
-    public function update($id, $dayOfWeek, $startTime, $endTime)
+    public function modify($id, $idResource, $idTimeslot, $idUser, $date, $remarks)
     {
-        $result = $this->db->dataManipulation("UPDATE Reservations SET dayOfWeek = '$dayOfWeek', startTime = '$startTime', endTime = '$endTime' WHERE id = $id");
+        $result = $this->db->dataManipulation("UPDATE Reservations SET idResource = '$idResource', idTimeslot = '$idTimeslot', idUser = '$idUser', date = '$date', remarks = '$remarks' WHERE id = '$id'");
         return $result;
     }
+    
     public function delete($idReservation)
     {
         return $this->db->dataManipulation("DELETE FROM Reservations WHERE id = '$idReservation'");

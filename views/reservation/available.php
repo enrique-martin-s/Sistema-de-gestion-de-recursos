@@ -2,7 +2,12 @@
 
     $resource=$data["resource"];
     $timeslotList=$data["timeslotList"];
-    $date=$data["date"];1
+    $date=$data["date"];
+    if(isset($data["idReservation"])){
+        $idReservation=$data["idReservation"];
+    }
+
+    
 ?>
 <form  action="index.php" method="post"></form>
 <label for="availableSlots"> Franjas horarias disponibles:</label>
@@ -33,7 +38,12 @@
         var remarks = document.getElementById('remarks').value;
         var resource = <?php echo json_encode($resource); ?>;
         if (confirm("¿Estás seguro de que quieres reservar "+resource.name+" el "+date+" en la franja de "+slotPicker.options[slotPicker.selectedIndex].text+" ?")) {
-        var url = "index.php?controller=reservationController&action=insertReservation&idResource="+resource.id+"&idTimeslot="+selectedSlot+"&date="+date+"&remarks="+remarks;
+            if(<?php echo isset($idReservation); ?>){
+                var idReservation = <?php echo json_encode($idReservation); ?>;
+                url = "index.php?controller=reservationController&action=modifyReservation&idReservation="+idReservation+"&date="+date+"&slot="+selectedSlot+"&remarks="+remarks+"&idResource="+resource.id+"&idTimeslot="+selectedSlot;
+            }else{
+                var url = "index.php?controller=reservationController&action=insertReservation&idResource="+resource.id+"&idTimeslot="+selectedSlot+"&date="+date+"&remarks="+remarks;
+            }
         window.location.href = url;
         }
     }

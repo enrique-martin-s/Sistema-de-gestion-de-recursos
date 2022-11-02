@@ -47,7 +47,7 @@ if (count($reservations) == 0) {
     echo "<td>" .$reservationList[$key]->date ."</td>";
     echo "<td>" .$reservationList[$key]->remarks ."</td>";
     if (Security::getType() == "admin" || $_SESSION["idUser"] == $reserve["user"]->id) {
-      echo "<td><button onclick='modificar(" . $reservationList[$key]->id. ")'>Modificar</button></td>";
+      echo "<td><button onclick='modificar(" . $reservationList[$key]->id. ")'>Modificar fecha</button></td>";
     echo "<td><button onclick='confirmarBorrado(" . $reservationList[$key]->id . ")'>Borrar</button></td>";
     }
     echo "</tr>";
@@ -63,6 +63,6 @@ echo "<p><a href='index.php?controller=reservationController&action=formAddReser
   }
 }
 function modificar(id) {
-  window.location.href = 'index.php?controller=reservationController&action=updateReservation&id='+id;
+  window.location.href = 'index.php?controller=reservationController&action=formUpdateReservation&id='+id;
 }
 </script>
