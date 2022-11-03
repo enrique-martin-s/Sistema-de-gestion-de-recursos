@@ -155,7 +155,6 @@ class ReservationController
 
     public function modifyReservation()
     {   
-        print("hola");
         if (Security::isLogged()) {
             $id = Security::limpiar($_REQUEST["idReservation"]);
             $idResource = Security::limpiar($_REQUEST["idResource"]);
@@ -168,6 +167,23 @@ class ReservationController
         } else {
             $data["error"] = "No tienes permiso para eso";
             View::render("usuario/login", $data);
+        }
+    }
+    public function search(){
+        if(Security::isLogged()){
+            $data["reservationList"] = $this->reservation->search(Security::limpiar($_REQUEST["searchText"]));
+            $reservationList = $data["reservationList"];
+            if($reservationList != null){
+                foreach ($reservationList as $key=>$reservation) {
+                    $data["reservations"][$key]["resource"] = $this->resource->get($reservation->idResource);
+                    $data["reservations"][$key]["timeslot"] = $this->timeslot->get($reservation->idTimeslot);
+                    $data["reservations"][$key]["user"] = $this->user->get($reservation->idUser);
+                }
+            }
+            View::render("reservation/all", $data);
+        }else{
+            $data["error"] = "No tienes permiso para eso";
+            View::render("user/login", $data);
         }
     }
 }

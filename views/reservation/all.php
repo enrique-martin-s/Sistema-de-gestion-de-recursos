@@ -16,9 +16,10 @@ if (isset($data["error"])) {
 }
 
 echo "<form action='index.php'>
-        <input type='hidden' name='action' value='buscarLibros'>
-        <input type='text' name='textoBusqueda'>
-        <input type='submit' value='Buscar'>
+        <input type='hidden' name='controller' value='reservationController'>
+        <input type='hidden' name='action' value='search'>
+        <input type='text' name='searchText'>
+        <input type='submit'>
       </form><br>";
 // Ahora, la tabla con los datos de los libros
 if (count($reservations) == 0) {
