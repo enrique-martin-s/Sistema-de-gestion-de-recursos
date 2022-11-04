@@ -111,6 +111,7 @@ class ReservationController
     public function insertReservation()
     {
         if(Security::isLogged()){
+            print_r($_POST);
             $idResource = Security::limpiar($_REQUEST["idResource"]);
             $idTimeslot = Security::limpiar($_REQUEST["idTimeslot"]);
             $idUser = Security::limpiar($_SESSION["idUser"]);

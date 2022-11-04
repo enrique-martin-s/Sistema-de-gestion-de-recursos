@@ -5,6 +5,10 @@
     $date=$data["date"];
     if(isset($data["idReservation"])){
         $idReservation=$data["idReservation"];
+        echo '<h2>Modifica tu reserva. Nuevo dia'.$date.'</h2>';
+    }else{
+        $idReservation="";
+        echo '<h2>Haz tu reserva</h2>';
     }
 
     
@@ -24,6 +28,7 @@
     }
     if(slotPicker.length == 0){
         submitButton.disabled = true;
+        print_r("slotPicker");
     }
 </script>
 <label for="remarks">Detalles:</label>
@@ -38,7 +43,7 @@
         var remarks = document.getElementById('remarks').value;
         var resource = <?php echo json_encode($resource); ?>;
         if (confirm("¿Estás seguro de que quieres reservar "+resource.name+" el "+date+" en la franja de "+slotPicker.options[slotPicker.selectedIndex].text+" ?")) {
-            if(<?php echo isset($idReservation); ?>){
+            if(<?php echo json_encode($idReservation); ?> != ""){
                 var idReservation = <?php echo json_encode($idReservation); ?>;
                 url = "index.php?controller=reservationController&action=modifyReservation&idReservation="+idReservation+"&date="+date+"&slot="+selectedSlot+"&remarks="+remarks+"&idResource="+resource.id+"&idTimeslot="+selectedSlot;
             }else{

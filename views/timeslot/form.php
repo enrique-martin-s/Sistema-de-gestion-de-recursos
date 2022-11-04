@@ -22,13 +22,13 @@ echo "<form action = 'index.php' method = 'post' enctype='multipart/form-data'>
         <input type='hidden' name='id' value='".$id."'>
         Day of the week:
         <select name='dayOfWeek'id='daySelect'>
-        <option value='monday'>Monday</option>
-        <option value='tuesday'>Tuesday</option>
-        <option value='wednesday'>Wednesday</option>
-        <option value='thursday'>Thursday</option>
-        <option value='friday'>Friday</option>
-        <option value='saturday' disabled>Saturday</option>
-        <option value='sunday' disabled>Sunday</option>
+        <option value='monday'>Lunes</option>
+        <option value='tuesday'>Martes</option>
+        <option value='wednesday'>Miércoles</option>
+        <option value='thursday'>Jueves</option>
+        <option value='friday'>Viernes</option>
+        <option value='saturday' >Sábado</option>
+        <option value='sunday' >Domingo</option>
         <select/><br>
         Start time:<input type='time' name='startTime' value='".$startTime."'><br>
         End time:<input type='time' name='endTime' value='".$endTime."'><br>

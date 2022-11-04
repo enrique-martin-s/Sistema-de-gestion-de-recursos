@@ -9,9 +9,10 @@ $order = array(
   'tuesday',
   'wednesday',
   'thursday',
-  'friday'
+  'friday',
+  'saturday',
+  'sunday'
 );
-
 
 //ordeno los slots por dia de la semana en caso de que se hayan añadido nuevos
 usort($timeslotList, function($a, $b) use ($col, $order) {
@@ -40,7 +41,7 @@ if (count($timeslotList) == 0) {
               <th>Hora de inicio</th>
               <th>Hora de fin</th>";
               if (Security::getType() == "admin") {
-                echo "<th colspan='2'>Actions</th>";
+                echo "<th colspan='2'>Acciones</th>";
                 }
             "</tr>
           </thead>";
@@ -50,7 +51,7 @@ if (count($timeslotList) == 0) {
     if($day!=$fila->dayOfWeek){
       $counter=0;
       echo "<tr >";
-      echo "<td name=".$fila->dayOfWeek." rowspan='1'>".$fila->dayOfWeek."</td>";
+      echo "<td name=".$fila->dayOfWeek." rowspan='1'>".Utils::dayTranslator($fila->dayOfWeek)."</td>";
     }else{
       echo "<tr >";
       ?>
