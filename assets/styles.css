@@ -1,0 +1,118 @@
+:root {
+    --orange: #e76f51;
+    --light-orange: #f4a261;
+    --yellow: #e9c46a;
+    --light-green: #2a9d8f;
+    --dark-green: #264653;
+  }
+
+body {
+    font-family: "Lato", sans-serif;
+    margin: 0;
+    padding: 0;
+}
+div.login-background{
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background-image: url(/assets/images/almeria-cine-localizaciones-capital-celia-viñas-contemporaneo-2.jpg);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    overflow: hidden;
+}
+
+div.title{
+    background-color: var(--light-green);
+    color: var(--dark-green);
+    display:flex;
+    align-items: center;
+}
+div.title-left{
+    width: 50%;
+    padding: 0.5rem;
+    text-align: left;
+    border-radius: 0 0 0 1rem;
+}
+div.title-right{
+    width: 50%;
+    text-align: right;
+    padding: 0.5rem;
+    border-radius: 0 0 1rem 0;
+    display:flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.main-head{
+    height: 150px;
+}
+
+div.sidenav {
+    height: 100%;
+    background-color: var(--dark-green);
+    overflow-x: hidden;
+    padding-top: 20px;
+}
+
+
+.main {
+    height: auto;
+    width:100%;
+    background-color: var(--light-green);
+}
+
+@media screen and (max-height: 450px) {
+    .sidenav {padding-top: 15px;}
+}
+
+@media screen and (max-width: 450px) {
+    .login-form{
+        margin-top: 10%;
+    }
+
+    .register-form{
+        margin-top: 10%;
+    }
+}
+
+@media screen and (min-width: 768px){
+    .main{
+        margin-left: 40%; 
+    }
+
+    .sidenav{
+        width: 40%;
+        position: fixed;
+        z-index: 1;
+        top: 0;
+        left: 0;
+    }
+
+    .login-form{
+        padding:30px;
+    }
+
+    .register-form{
+        margin-top: 20%;
+    }
+}
+
+
+.login-main-text{
+    margin-top: 20%;
+    padding: 60px;
+    color: #fff;
+}
+
+.login-main-text h2{
+    font-weight: 300;
+}
+
+.btn-black{
+    background-color: #000 !important;
+    color: #fff;
+}

@@ -29,6 +29,16 @@ if (isset($data["info"])) {
 if (isset($data["error"])) {
   echo "<div style='color:red'>".$data["error"]."</div>";
 }
+//añade un boton para añadir un nuevo slot y un formulario de busqueda
+echo '<nav class="navbar navbar-light bg-light">';
+echo "<form action='index.php' class='form-inline'>
+        <input type='hidden' name='controller' value='timeslotsController'>
+        <input type='hidden' name='action' value='searchTimeslot'>
+        <input class='form-control mr-sm-2' type='search' placeholder='Busca' aria-label='Search' name='textoBusqueda'>
+        <button class='btn btn-outline-success my-2 my-sm-0' type='submit'>Buscar</button>
+      </form><br>";
+      echo "<a href='index.php?controller=timeslotsController&action=formAddTimeslot' class='btn btn-primary'>Crear horario</a>";
+echo "      </nav>";
 
 // Ahora, la tabla con los datos de los libros
 if (count($timeslotList) == 0) {
@@ -76,7 +86,7 @@ if (count($timeslotList) == 0) {
 }
 // Linea usada para añadir todos los slots por defecto.
 //echo "<p><a href='index.php?controller=timeslotsController&action=addAllTimeslots'>Añadir todos los timeslots</a></p>";
-echo "<p><a href='index.php?controller=timeslotsController&action=formAddTimeslot'>Nuevo</a></p>";
+
 ?>
 <script>
   function confirmarBorrado(id) {

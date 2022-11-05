@@ -12,12 +12,15 @@ if (isset($data["error"])) {
   echo "<div style='color:red'>".$data["error"]."</div>";
 }
 
-echo "<form action='index.php' method='post'>
-        <input type='hidden' name='controller' value='UserController'>
+echo '<nav class="navbar navbar-light bg-light">';
+echo "<form action='index.php' class='form-inline'>
+        <input type='hidden' name='controller' value='userController'>
         <input type='hidden' name='action' value='searchUsers'>
-        <input type='text' name='textoBusqueda'>
-        <input type='submit' value='Buscar'>
+        <input class='form-control mr-sm-2' type='search' placeholder='Busca' aria-label='Search' name='textoBusqueda'>
+        <button class='btn btn-outline-success my-2 my-sm-0' type='submit'>Buscar</button>
       </form><br>";
+      echo "<a href='index.php?controller=userController&action=formAddUser' class='btn btn-primary'>Crear usuario</a>";
+echo "      </nav>";
 
 // Ahora, la tabla con los datos de los libros
 if (count($userList) == 0) {
@@ -44,7 +47,6 @@ if (count($userList) == 0) {
   echo "</table>";
 }
 
-echo "<p><a href='index.php?controller=UserController&action=formAddUser'>Nuevo</a></p>";
 ?>
 <script>
   function confirmarBorrado(id , sessionId) {

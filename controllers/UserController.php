@@ -13,28 +13,35 @@ class UserController {
 
     // Muestra el formulario de login
     public function formLogin() {
-        View::render("user/login");
+        View::renderlogin("user/login");
     }
 
     // Comprueba los datos de login. Si son correctos, el modelo iniciará la sesión y
     // desde aquí se redirige a otra vista. Si no, nos devuelve al formulario de login.
     public function processFormLogin() {
+        if(isset($_REQUEST["username"])){
         $name = Security::limpiar($_REQUEST["username"]);
         $passwd = Security::limpiar($_REQUEST["password"]);
+        }else{
+            $name = "";
+            $passwd = "";
+        }
         $result = $this->user->login($name, $passwd);
          if ($result) {
             Security::setLogged(true);
             $userInfo = $this->user->get($_SESSION["idUser"]);
             Security::setType($userInfo->type);
+            Security::setRealName($userInfo->realname);
             header("Location: index.php?controller=ReservationController&action=showReservations");
         } else {
-            $data["error"] = "User o contraseña incorrectos";
-            View::render("user/login", $data);
+            $data["error"] = "Usuario o contraseña incorrectos";
+            View::renderLogin("user/login", $data); 
         }
     }
 
     public function formAddUser() {
-        View::render("user/registerForm");
+        $data["userList"]= $this->user->getAll();
+        View::render("user/registerForm", $data);
     }
     public function processFormAddUser() {
         $name = Security::limpiar($_REQUEST["username"]);
@@ -52,11 +59,12 @@ class UserController {
                 if(Security::isLogged()){
                     $this->showUsers();
                 }else{
-                    View::render("user/login");
+                    View::renderLogin("user/login", $data);
                 }
             } else {
                 $data["error"] = "Fallo al crear usuario";
-                View::render("user/login");
+                View::renderLogin("user/login");
+                print_r($name);
             }
         }
     }
@@ -68,7 +76,7 @@ class UserController {
         Security::closeSession();
         $data["info"] = "Sesión cerrada con éxito";
         header("Location: index.php");
-        View::render("user/login", $data);
+        View::renderLogin("user/login", $data);
 
     }
     public function showUsers() {
@@ -77,16 +85,16 @@ class UserController {
         View::render("user/all", $data);
         } else {
             $data["error"] = "No tienes permiso para eso";
-            View::render("user/login", $data);
+            View::renderLogin("user/login", $data);
         }
     }
     public function searchUsers(){
         if(Security::isLogged() && Security::getType() == "admin"){
-        $data["userList"] = $this->user->search($_POST["textoBusqueda"]);
+        $data["userList"] = $this->user->search($_REQUEST["textoBusqueda"]);
         View::render("user/all", $data);
         } else {
             $data["error"] = "No tienes permiso para eso";
-            View::render("user/login", $data);
+            View::renderLogin("user/login", $data);
         }
     }
 
@@ -99,7 +107,7 @@ class UserController {
         header("Location: index.php?controller=UserController&action=showUsers");
         } else {
             $data["error"] = "No tienes permiso para eso";
-            View::render("user/login", $data);
+            View::renderLogin("user/login", $data);
         }
     }
     public function updateUserForm() {
@@ -109,7 +117,7 @@ class UserController {
         View::render("user/registerForm", $data);
         } else {
             $data["error"] = "No tienes permiso para eso";
-            View::render("user/login", $data);
+            View::renderLogin("user/login", $data);
         }
     }
 
@@ -137,8 +145,8 @@ class UserController {
         }
         } else {
             $data["error"] = "No tienes permiso para eso";
-            View::render("user/login", $data);
+            View::renderLogin("user/login", $data);
         }
     }
- 
+    
 }

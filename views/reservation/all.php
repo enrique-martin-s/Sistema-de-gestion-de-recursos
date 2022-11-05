@@ -20,12 +20,15 @@ usort($reservationList, function($a, $b) {
   return strtotime($a->date) - strtotime($b->date);
 });
 
-echo "<form action='index.php'>
+echo '<nav class="navbar navbar-light bg-light">';
+echo "<form action='index.php' class='form-inline'>
         <input type='hidden' name='controller' value='reservationController'>
         <input type='hidden' name='action' value='search'>
-        <input type='text' name='searchText'>
-        <input type='submit'>
+        <input class='form-control mr-sm-2' type='search' placeholder='Busca' aria-label='Search' name='searchText'>
+        <button class='btn btn-outline-success my-2 my-sm-0' type='submit'>Buscar</button>
       </form><br>";
+      echo "<a href='index.php?controller=reservationController&action=formAddReservation' class='btn btn-primary'>Crear reserva</a>";
+echo "      </nav>";
 // Ahora, la tabla con los datos de los libros
 if (count($reservations) == 0) {
   echo "No hay datos";
@@ -64,7 +67,6 @@ if (count($reservations) == 0) {
   }
   echo "</table>";
 }
-echo "<p><a href='index.php?controller=reservationController&action=formAddReservation'>Nuevo</a></p>";
 ?>
 <script>
   function confirmarBorrado(id) {

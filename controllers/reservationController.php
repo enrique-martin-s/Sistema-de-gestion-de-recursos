@@ -43,7 +43,7 @@ class ReservationController
         View::render("reservation/all", $data);
         }else{
             $data["error"] = "No tienes permiso para eso";
-            View::render("user/login", $data);
+            View::renderLogin("user/login", $data);
         }
     }
     public function showDay(){
@@ -55,7 +55,7 @@ class ReservationController
             print_r($data["reservationList"]);
         }else{
             $data["error"] = "No tienes permiso para eso";
-            View::render("user/login", $data);
+            View::renderLogin("user/login", $data);
         }
     }
     public function showCalendar(){
@@ -64,11 +64,11 @@ class ReservationController
             View::render("reservation/calendar", $data);
         }else{
             $data["error"] = "No tienes permiso para eso";
-            View::render("user/login", $data);
+            View::renderLogin("user/login", $data);
         }
     }
 
-    // --------------------------------- FORMULARIO ALTA DE LIBROS ----------------------------------------
+    // --------------------------------- FORMULARIO NUEVAS RESERVAS ----------------------------------------
 
     public function formAddReservation()
     {   
@@ -77,10 +77,10 @@ class ReservationController
             View::render("reservation/form", $data);
         }else{
             $data["error"] = "No tienes permiso para eso";
-            View::render("user/login", $data);
+            View::renderLogin("user/login", $data);
         }
     }
-
+    // --------------------------------- FORMULARIO ACTUALIZAR RESERVA ----------------------------------------
     public function formUpdateReservation()
     {   
         if(Security::isLogged()){
@@ -90,12 +90,12 @@ class ReservationController
             View::render("reservation/modifyForm", $data);
         }else{
             $data["error"] = "No tienes permiso para eso";
-            View::render("user/login", $data);
+            View::renderLogin("user/login", $data);
         }
     }
     
 
-    // --------------------------------- INSERTAR LIBROS ----------------------------------------
+    // --------------------------------- FORMULARIO SLOTS DISPONIBLES ----------------------------------------
     public function availableSlots(){
         $idResource = $_POST["resourceSelect"];
         $date = $_POST["datePicker"];
@@ -108,6 +108,8 @@ class ReservationController
         }
         View::render("reservation/available", $data);
     }
+
+    // --------------------------------- AÑADIR RESERVAS ----------------------------------------
     public function insertReservation()
     {
         if(Security::isLogged()){
@@ -121,11 +123,11 @@ class ReservationController
             header("Location: index.php?controller=reservationController&action=showReservations");
         }else {
             $data["error"] = "No tienes permiso para eso";
-            View::render("usuario/login", $data);
+            View::renderLogin("user/login");
         }
     }
 
-    // --------------------------------- BORRAR LIBROS ----------------------------------------
+    // --------------------------------- BORRAR RESERVAS ----------------------------------------
 
     public function deleteReservation()
     {   
@@ -135,10 +137,14 @@ class ReservationController
             $data["reservationList"] = $this->reservation->getAll();
             header("Location: index.php?controller=ReservationController&action=showReservations");
         }
+        else {
+            $data["error"] = "No tienes permiso para eso";
+            View::renderLogin("user/login");
+        }
     }
     
 
-    // --------------------------------- FORMULARIO MODIFICAR LIBROS ----------------------------------------
+    // --------------------------------- FORMULARIO MODIFICAR RESERVAS ----------------------------------------
 
     public function updateFormReservation()
     {
@@ -148,11 +154,11 @@ class ReservationController
             View::render("reservation/form", $data);
         } else {
             $data["error"] = "No tienes permiso para eso";
-            View::render("usuario/login", $data);
+            View::renderLogin("user/login");
         }
     }
 
-    // --------------------------------- MODIFICAR LIBROS ----------------------------------------
+    // --------------------------------- MODIFICAR RESERVAS ----------------------------------------
 
     public function modifyReservation()
     {   
@@ -167,9 +173,10 @@ class ReservationController
             header("Location: index.php?controller=reservationController&action=showReservations");
         } else {
             $data["error"] = "No tienes permiso para eso";
-            View::render("usuario/login", $data);
+            View::renderLogin("user/login");
         }
     }
+    // --------------------------------- BUSCADOR RESERVAS ----------------------------------------
     public function search(){
         if(Security::isLogged()){
             $data["reservationList"] = $this->reservation->search(Security::limpiar($_REQUEST["searchText"]));
@@ -184,7 +191,7 @@ class ReservationController
             View::render("reservation/all", $data);
         }else{
             $data["error"] = "No tienes permiso para eso";
-            View::render("user/login", $data);
+            View::renderLogin("user/login", $data);
         }
     }
 }

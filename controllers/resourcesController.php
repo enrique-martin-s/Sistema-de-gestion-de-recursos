@@ -23,17 +23,17 @@ class ResourcesController
         View::render("resource/all", $data);
         } else {
             $data["error"] = "No tienes permiso para eso";
-            View::render("user/login", $data);
+            View::renderLogin("user/login", $data);
         }
     }
 
     public function searchResource(){
         if(Security::isLogged()){
-        $data["resourceList"] = $this->resource->search($_POST["textoBusqueda"]);
+        $data["resourceList"] = $this->resource->search($_REQUEST["textoBusqueda"]);
         View::render("resource/all", $data);
         } else {
             $data["error"] = "No tienes permiso para eso";
-            View::render("user/login", $data);
+            View::renderLogin("user/login", $data);
         }
     }
 
@@ -45,7 +45,7 @@ class ResourcesController
             View::render("resource/form");
         } else {
             $data["error"] = "No tienes permiso para eso";
-            View::render("user/login", $data);
+            View::renderLogin("user/login", $data);
         }
     }
 
@@ -70,7 +70,7 @@ class ResourcesController
 
     } else {
         $data["error"] = "No tienes permiso para eso";
-        View::render("user/login", $data);
+        View::renderLogin("user/login", $data);
     }
     }
 
@@ -85,7 +85,7 @@ class ResourcesController
             header("Location: index.php?controller=ResourcesController&action=showResources");
         } else {
             $data["error"] = "No tienes permiso para eso";
-            View::render("user/login", $data);
+            View::renderLogin("user/login", $data);
         }
     }
     
@@ -100,7 +100,7 @@ class ResourcesController
             View::render("resource/form", $data);
         } else {
             $data["error"] = "No tienes permiso para eso";
-            View::render("usuario/login", $data);
+            View::renderLogin("user/login");
         }
     }
 
@@ -136,7 +136,7 @@ class ResourcesController
             header("Location: index.php?controller=ResourcesController&action=showResources");
         }else{
             $data["error"] = "No tienes permiso para eso";
-            View::render("usuario/login", $data);
+            View::renderLogin("user/login");
         }
     }
 }

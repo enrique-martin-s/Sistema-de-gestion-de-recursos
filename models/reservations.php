@@ -63,7 +63,7 @@ class Reservation extends Model
 
     public function search($textoBusqueda)
     {
-        $result = $this->db->dataQuery("SELECT * FROM Reservations INNER JOIN Resources ON Reservations.idResource = Resources.id INNER JOIN Users ON Reservations.idUser = Users.id WHERE remarks LIKE '%$textoBusqueda%' OR date LIKE '%$textoBusqueda%' OR Resources.name LIKE '%$textoBusqueda%' OR Users.username LIKE '%$textoBusqueda%'");
+        $result = $this->db->dataQuery("SELECT * FROM Reservations INNER JOIN Resources ON Reservations.idResource = Resources.id INNER JOIN Timeslots ON Reservations.idTimeslot =  Timeslots.id  INNER JOIN Users ON Reservations.idUser = Users.id WHERE remarks LIKE '%$textoBusqueda%' OR date LIKE '%$textoBusqueda%' OR Resources.name LIKE '%$textoBusqueda%' OR Users.realname LIKE '%$textoBusqueda%' OR Timeslots.startTime LIKE '%$textoBusqueda%'");
         return $result;
 
     }

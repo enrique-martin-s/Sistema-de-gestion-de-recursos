@@ -23,7 +23,7 @@ class TimeslotsController
         View::render("timeslot/all", $data);
         } else {
             $data["error"] = "No tienes permiso para eso";
-            View::render("user/login", $data);
+            View::renderLogin("user/login", $data);
         }
     }
 
@@ -35,7 +35,7 @@ class TimeslotsController
         View::render("timeslot/form");
         } else {
             $data["error"] = "No tienes permiso para eso";
-            View::render("user/login", $data);
+            View::renderLogin("user/login", $data);
         }
     }
 
@@ -51,7 +51,7 @@ class TimeslotsController
             header("Location: index.php?controller=TimeslotsController&action=showTimeslots");
         }else {
             $data["error"] = "No tienes permiso para eso";
-            View::render("usuario/login", $data);
+            View::renderLogin("user/login");
         }
     }
 
@@ -66,7 +66,7 @@ class TimeslotsController
             header("Location: index.php?controller=TimeslotsController&action=showTimeslots");
         } else {
             $data["error"] = "No tienes permiso para eso";
-            View::render("user/login", $data);
+            View::renderLogin("user/login", $data);
         }
     }
     
@@ -81,7 +81,7 @@ class TimeslotsController
             View::render("timeslot/form", $data);
         } else {
             $data["error"] = "No tienes permiso para eso";
-            View::render("usuario/login", $data);
+            View::renderLogin("user/login");
         }
     }
 
@@ -99,7 +99,17 @@ class TimeslotsController
             header("Location: index.php?controller=TimeslotsController&action=showTimeslots");
         }else{
             $data["error"] = "No tienes permiso para eso";
-            View::render("usuario/login", $data);
+            View::renderLogin("user/login");
+        }
+    }
+    public function searchTimeslot()
+    {
+        if (Security::isLogged()) {
+            $data["timeslotList"] = $this->timeslot->search(Security::limpiar($_REQUEST["textoBusqueda"]));
+            View::render("timeslot/all", $data);
+        } else {
+            $data["error"] = "No tienes permiso para eso";
+            View::renderLogin("user/login");
         }
     }
     public function addAllTimeslots(){

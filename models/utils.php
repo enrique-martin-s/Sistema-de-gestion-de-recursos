@@ -29,6 +29,33 @@ public static function dayTranslator($day){
       break;
         }
     }
+    public static function dayTranslatorReverse($day){
+      $day=strtolower($day);
+      switch($day){
+        case "lunes":
+          return "monday";
+          break;
+        case "martes":
+          return "tuesday";
+          break;
+        case "miércoles":
+          return "wednesday";
+          break;
+        case "jueves":
+          return "thursday";
+          break;
+        case "viernes":
+          return "friday";
+          break;
+        case "sábado":
+          return "saturday";
+          break;
+        case "domingo":
+          return "sunday";
+          break;
+            }
+        }
+    
     static function monthTranslator($month){
       switch($month){
         case "january":

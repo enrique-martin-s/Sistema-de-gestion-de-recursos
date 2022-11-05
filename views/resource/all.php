@@ -12,13 +12,16 @@ if (isset($data["info"])) {
 if (isset($data["error"])) {
   echo "<div style='color:red'>".$data["error"]."</div>";
 }
-
-echo "<form action='index.php' method = 'post'>
+echo '<nav class="navbar navbar-light bg-light">';
+echo "<form action='index.php' class='form-inline'>
         <input type='hidden' name='controller' value='resourcesController'>
         <input type='hidden' name='action' value='searchResource'>
-        <input type='text' name='textoBusqueda'>
-        <input type='submit'>
+        <input class='form-control mr-sm-2' type='search' placeholder='Busca' aria-label='Search' name='textoBusqueda'>
+        <button class='btn btn-outline-success my-2 my-sm-0' type='submit'>Buscar</button>
       </form><br>";
+      echo "<a href='index.php?controller=resourcesController&action=formAddResource' class='btn btn-primary'>Crear recurso</a>";
+echo "      </nav>";
+
 
 // Ahora, la tabla con los datos de los libros
 if (count($resourceList) == 0) {
@@ -50,7 +53,6 @@ if (count($resourceList) == 0) {
   }
   echo "</table>";
 }
-echo "<p><a href='index.php?controller=resourcesController&action=formAddResource'>Nuevo</a></p>";
 ?>
 <script type="text/javascript">
 function confirmarBorrado(id) {

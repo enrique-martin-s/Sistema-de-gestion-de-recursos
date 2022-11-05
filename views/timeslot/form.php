@@ -21,7 +21,7 @@ $endTime = $timeslot->endTime ?? "00:00";
 echo "<form action = 'index.php' method = 'post' enctype='multipart/form-data'>
         <input type='hidden' name='id' value='".$id."'>
         Day of the week:
-        <select name='dayOfWeek'id='daySelect'>
+        <select name='dayOfWeek'id='daySelect' required>
         <option value='monday'>Lunes</option>
         <option value='tuesday'>Martes</option>
         <option value='wednesday'>Miércoles</option>

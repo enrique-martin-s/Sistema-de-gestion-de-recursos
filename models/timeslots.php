@@ -55,12 +55,9 @@ class Timeslot extends Model
 
     }
 
-    // Busca un texto en las tablas de libros y autores. Devuelve un array de objetos con todos los libros
-    // que cumplen el criterio de búsqueda.
     public function search($textoBusqueda)
     {
-        // Buscamos los libros de la biblioteca que coincidan con el texto de búsqueda
-        $result = $this->db->dataQuery("SELECT * FROM Timeslots WHERE name LIKE '%$textoBusqueda%' OR description LIKE '%$textoBusqueda%'");
+        $result = $this->db->dataQuery("SELECT * FROM Timeslots WHERE dayOfWeek LIKE '%$textoBusqueda%' OR startTime LIKE '%$textoBusqueda%' OR endTime LIKE '%$textoBusqueda%'");
         return $result;
     }
     public function getAvailableDaySlots($resourceId, $date, $dayOfWeek)

@@ -1,4 +1,6 @@
-<h5>Todos los derechos reservados (o no)</h5>
-<h5>&copy; 2022 Compuglobal Hipermeganet Enterprises</h5>
+<div id="footer-div">
+    <h5>Todos los derechos reservados (o no)</h5>
+    <h5>&copy; 2022 Compuglobal Hipermeganet Enterprises</h5>
+</div>
 </body>
 </html
