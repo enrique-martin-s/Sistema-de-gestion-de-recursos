@@ -53,17 +53,22 @@ div.login-background{
     overflow: hidden;
 }
 div.title{
-    background-color: var(--light-green);
-    color: var(--dark-green);
+    background-color: var(--dark-green);
+    color: white;
     display:flex;
     align-items: center;
     width: 100vw;
+    height:max-content;
 }
 div.title-left{
     width: 50%;
     padding-left: 0.5rem;
     text-align: left;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
     border-radius: 0 0 0 1rem;
+    margin-left: 20px;
 }
 div.title-right{
     width: 50%;

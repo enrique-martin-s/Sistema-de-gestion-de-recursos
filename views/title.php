@@ -3,7 +3,7 @@
     $type = $_SESSION["type"]??"sin registrar";
     echo "<div class='title'>";
     echo "<div class='title-left row'>";
-    echo "<img src='/assets/images/escudo.png' alt='logo' class='logo' style='width:1%'>
+    echo "<img src='/assets/images/escudo.png' alt='logo' class='logo' style='width:5%;'>
     <h2>Gestor de recursos</h2>";
     echo "</div>";
     echo "<div class='title-right'>";
@@ -15,5 +15,7 @@
 <script>
     if (<?php echo json_encode($_SESSION["type"]) ?> == "admin") {
         document.getElementsByClassName("title")[0].style.backgroundColor = "var(--orange)";
+        document.getElementsByClassName("title")[0].style.color = "black";
+
     }
 </script>

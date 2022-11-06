@@ -13,10 +13,11 @@
                 </li>'; 
                 //echo '<a href='index.php?controller=ReservationController&action=showCalendar'>Calendario</a> ';  a hacer en un futuro;
             }
-        }else
+        }else{
             echo '<li class="nav-item">
-            <a href="index.php">Home</a>
+            <a href="index.php">Home</a style="backgroundColor:var(--light-green)">
             </li>';
+        }
     
     if (Security::isLogged() && Security::getType()=="admin") {
         echo ' <li class="nav-item">
