@@ -45,8 +45,8 @@ if (count($timeslotList) == 0) {
   echo "No hay datos";
 } else {
   echo "<div class='row'>
-  <table class='mx-auto' border ='1'>";
-  echo "<thead>
+  <table class='mx-auto  tabla' border ='1'>";
+  echo "<thead class='thead'>
             <tr>
               <th>Día</th>
               <th>Hora de inicio</th>
@@ -54,7 +54,7 @@ if (count($timeslotList) == 0) {
               if (Security::getType() == "admin") {
                 echo "<th colspan='2'>Acciones</th>";
                 }
-            "</tr>
+            echo "</tr>
           </thead>";
   $counter = 0;
   $day = "";

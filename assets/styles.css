@@ -10,11 +10,35 @@ body {
     font-family: "Lato", sans-serif;
     margin: 0;
     padding: 0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--light-green);
+    overflow-x: hidden;
 }
-footer.#footer{
-    position:fixed !important;
-    bottom:0 !important;
+.tabla{
+    background-color: #fff;
+    margin-top: 20px;
+    margin-bottom: 20px;
 }
+.thead{
+    background-color: var(--light-orange);
+
+}
+#footer{
+    margin-top: auto;
+    width:100% !important;
+    background-color: var(--dark-green);
+    color: white;
+    text-align: center;
+    padding-top: 10px;
+    font-size: 12px;
+}
+h5{
+    margin:0;
+    padding:0;
+}
+
 div.login-background{
     height: 100vh;
     width: 100vw;
@@ -33,6 +57,7 @@ div.title{
     color: var(--dark-green);
     display:flex;
     align-items: center;
+    width: 100vw;
 }
 div.title-left{
     width: 50%;
@@ -52,6 +77,9 @@ div.title-right{
 
 .main-head{
     height: 150px;
+}
+.navbar{
+    width:100% !important;
 }
 
 div.sidenav {

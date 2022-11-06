@@ -29,8 +29,8 @@ if (count($reservations) == 0) {
   echo "No hay datos";
 } else {
   echo "<div class='row'>
-  <table class='mx-auto' border ='1'>";
-  echo "<thead>
+  <table class='mx-auto tabla' border ='1'>";
+  echo "<thead class='thead'>
             <tr>
               <th>Recurso</th>
               <th>Imagen</th>
