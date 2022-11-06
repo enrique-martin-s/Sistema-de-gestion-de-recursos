@@ -15,11 +15,6 @@ if (isset($data["error"])) {
   echo "<div style='color:red'>".$data["error"]."</div>";
 }
 
-
-usort($reservationList, function($a, $b) {
-  return strtotime($a->date) - strtotime($b->date);
-});
-
 echo '<nav class="navbar navbar-light bg-light">';
 echo "<form action='index.php' class='form-inline'>
         <input type='hidden' name='controller' value='reservationController'>
@@ -27,13 +22,14 @@ echo "<form action='index.php' class='form-inline'>
         <input class='form-control mr-sm-2' type='search' placeholder='Busca' aria-label='Search' name='searchText'>
         <button class='btn btn-outline-success my-2 my-sm-0' type='submit'>Buscar</button>
       </form><br>";
-      echo "<a href='index.php?controller=reservationController&action=formAddReservation' class='btn btn-primary'>Crear reserva</a>";
+      echo "<a href='index.php?controller=reservationController&action=formAddReservation' class='btn btn-success'>Crear reserva</a>";
 echo "      </nav>";
 // Ahora, la tabla con los datos de los libros
 if (count($reservations) == 0) {
   echo "No hay datos";
 } else {
-  echo "<table border ='1'>";
+  echo "<div class='row'>
+  <table class='mx-auto' border ='1'>";
   echo "<thead>
             <tr>
               <th>Recurso</th>
@@ -58,14 +54,16 @@ if (count($reservations) == 0) {
     if ((Security::getType() == "admin" || $_SESSION["idUser"] == $reserve["user"]->id) && $reservationList[$key]->date > date("Y-m-d")) {
       echo "<td><button onclick='modificar(" . $reservationList[$key]->id. ")'>Modificar fecha</button></td>";
     }else{
-      echo '<td><img src="/assets/images/bttf.jpeg" alt="No puedes" style="width:100px"></td>';
+      echo '<td>Fecha pasada</td>';
     }
     if (Security::getType() == "admin" || $_SESSION["idUser"] == $reserve["user"]->id) {
       echo "<td><button onclick='confirmarBorrado(" . $reservationList[$key]->id . ")'>Borrar</button></td>";
+    }else{
+      echo '<td>Fecha pasada</td>';
     }
     echo "</tr>";
   }
-  echo "</table>";
+  echo "</table></div>";
 }
 ?>
 <script>

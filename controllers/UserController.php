@@ -26,6 +26,7 @@ class UserController {
             $name = "";
             $passwd = "";
         }
+        $passwd = Security::toMd5($passwd);
         $result = $this->user->login($name, $passwd);
          if ($result) {
             Security::setLogged(true);
@@ -53,6 +54,7 @@ class UserController {
             $data["error"] = "Las contraseñas no coinciden";
             View::render("user/form", $data);
         }else{
+            $passwd=Security::toMd5($passwd);
             $result = $this->user->addUser($name, $passwd, $realname);
             if ($result) { // Si se ha insertado correctamente
                 $data["info"] = "Usuario creado con éxito";
@@ -125,22 +127,26 @@ class UserController {
         if(Security::isLogged() && Security::getType() == "admin"){
         $id = $_REQUEST["id"];
         $name = Security::limpiar($_REQUEST["username"]);
-        $passwd = Security::limpiar($_REQUEST["password"]);
-        $confpasswd = Security::limpiar($_REQUEST["confpassword"]);
+        $passwd = Security::toMd5(Security::limpiar($_REQUEST["password"]));
         $realname = Security::limpiar($_REQUEST["realname"]);
-        if($passwd!=$confpasswd){
-            $data["error"] = "Las contraseñas no coinciden";
-            $data["user"] = $this->user->get($id);
+        $prepass = Security::toMd5(Security::limpiar($_REQUEST["prepassword"]));
+        $data["user"] = $this->user->get($id);
+        // print_r($user->password);
+        // print("<br>");
+        // print_r($passwd);
+        if($data["user"]->password != $prepass){
+            $data["error"] = "La contraseña anterior no coincide";
             View::render("user/registerForm", $data);
         }else{
-            $result = $this->user->updateUser($id, $name, $passwd, $realname);
+            $result = $this->user->updateUser($id, $name, $passwd, $realname);;
             if ($result) { // Si se ha insertado correctamente
                 $data["info"] = "Usuario actualizado con éxito";
                 $data["userList"] = $this->user->getAll();
                 View::render("user/all", $data);
             } else {
-                $data["error"] = "Fallo al actualizar usuario";
-                View::render("user/form", $data);
+                $data["user"] = $this->user->get($id);
+                $data["error"] = "Fallo al actualizar usuario (¿Has cambiado los datos?)";
+                View::render("user/registerForm", $data);
             }
         }
         } else {

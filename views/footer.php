@@ -1,6 +1,6 @@
-<div id="footer-div">
-    <h5>Todos los derechos reservados (o no)</h5>
+<footer id="footer">
+    <h5>Todos los derechos reservados </h5>
     <h5>&copy; 2022 Compuglobal Hipermeganet Enterprises</h5>
-</div>
+</footer>
 </body>
 </html

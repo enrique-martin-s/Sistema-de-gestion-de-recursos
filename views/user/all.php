@@ -19,14 +19,15 @@ echo "<form action='index.php' class='form-inline'>
         <input class='form-control mr-sm-2' type='search' placeholder='Busca' aria-label='Search' name='textoBusqueda'>
         <button class='btn btn-outline-success my-2 my-sm-0' type='submit'>Buscar</button>
       </form><br>";
-      echo "<a href='index.php?controller=userController&action=formAddUser' class='btn btn-primary'>Crear usuario</a>";
+      echo "<a href='index.php?controller=userController&action=formAddUser' class='btn btn-success'>Crear usuario</a>";
 echo "      </nav>";
 
 // Ahora, la tabla con los datos de los libros
 if (count($userList) == 0) {
   echo "No hay datos";
 } else {
-  echo "<table border ='1'>";
+  echo "<div class='row'>
+  <table class='mx-auto' border ='1'>";
   echo "<thead>
             <tr>
               <th>Username</th>
@@ -44,7 +45,7 @@ if (count($userList) == 0) {
     echo "<td><button onclick='confirmarBorrado(".$fila->id.",".Security::getUserId().")' >Borrar</button></td>";
     echo "</tr>";
   }
-  echo "</table>";
+  echo "</table></div>";
 }
 
 ?>

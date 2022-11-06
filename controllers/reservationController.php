@@ -26,11 +26,12 @@ class ReservationController
     public function showReservations()
     {
         if(Security::isLogged()){
-            if(Security::getType()=="admin"){
-                $data["reservationList"] = $this->reservation->getAll();
-            }else{
-                $data["reservationList"] = $this->reservation->getUserReservations(Security::getUserId());
-            }
+            // if(Security::getType()=="admin"){
+            //     $data["reservationList"] = $this->reservation->getAllReservations();
+            // }else{
+            //     $data["reservationList"] = $this->reservation->getUserReservations(Security::getUserId());
+            // }
+            $data["reservationList"] = $this->reservation->getAllReservations();
         
         $reservationList = $data["reservationList"];
         if($reservationList != null){
@@ -119,7 +120,12 @@ class ReservationController
             $idUser = Security::limpiar($_SESSION["idUser"]);
             $date = Security::limpiar($_REQUEST["date"]);
             $remarks = Security::limpiar($_REQUEST["remarks"]);
-            $result = $this->reservation->insert($idResource, $idTimeslot, $idUser, $date, $remarks);
+            if($_REQUEST["repeatDate"]){
+                $repeatDate = Security::limpiar($_REQUEST["repeatDate"]);
+            }else{
+                $repeatDate = null;
+            }
+            $this->reservation->insert($idResource, $idTimeslot, $idUser, $date, $remarks, $repeatDate);
             header("Location: index.php?controller=reservationController&action=showReservations");
         }else {
             $data["error"] = "No tienes permiso para eso";

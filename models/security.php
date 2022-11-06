@@ -80,4 +80,7 @@ class Security {
         }
         return $text;
     }
+    public static function toMd5 ($text){
+        return md5($text);
+    }
 }

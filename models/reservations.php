@@ -16,6 +16,7 @@ class Reservation extends Model
         $result = $this->db->dataQuery("SELECT * FROM Reservations INNER JOIN Resources ON Reservations.idResource = Resources.id INNER JOIN Users ON Reservations.idUser = Users.id INNER JOIN TimeSlots ON Reservations.idTimeSlot = TimeSlots.id");
         return $result;
     }
+    // recibe todas las reservas de la base de datos de un recurso en una fecha
     public function getResourceReservations($idResource, $date){
         $sql = "SELECT * FROM $this->table WHERE idResource = $idResource AND date = '$date'";
         $result = $this->db->dataQuery($sql);
@@ -25,28 +26,35 @@ class Reservation extends Model
         }
         return $reservations; 
     }
-
+    // recibe todas las reservas de la base de datos ordenadas por fecha
+    public function getAllReservations(){
+        $sql = "SELECT * FROM $this->table ORDER BY date";
+        $result = $this->db->dataQuery($sql);
+        $reservations = array();
+        foreach ($result as $reservation) {
+            $reservations[] = $reservation;
+        }
+        return $reservations;
+    }
+    // recibe todas las reservas de la base de datos ordenadas por fecha de un usuario
     public function getUserReservations($idUser){
-        $result = $this->db->dataQuery("SELECT * FROM Reservations WHERE idUser = $idUser");
+        $result = $this->db->dataQuery("SELECT * FROM Reservations  WHERE idUser = $idUser ORDER BY date" );
         return $result;
     }
 
-    public function insert($idResource, $idTimeslot, $idUser, $date, $remarks)
-    {
-        $result = $this->db->dataManipulation("INSERT INTO Reservations (idResource, idTimeslot, idUser, date, remarks) VALUES ('$idResource', '$idTimeslot', '$idUser', '$date', '$remarks')");
+    public function insert($idResource, $idTimeslot, $idUser, $date, $remarks, $repeatDate){
+        //realiza la inserción en la base de datos tantas veces como se repita la fecha
+        $sql = "INSERT INTO $this->table (idResource, idTimeslot, idUser, date, remarks) VALUES ($idResource, $idTimeslot, $idUser, '$date', '$remarks')";
+        $result = $this->db->dataManipulation($sql);
+        if($repeatDate != null){
+            while($date<$repeatDate){
+                $date = date('Y-m-d', strtotime($date. ' + 7 days'));
+                $sql = "INSERT INTO $this->table (idResource, idTimeslot, idUser, date, remarks) VALUES ($idResource, $idTimeslot, $idUser, '$date', '$remarks')";
+                $result = $this->db->dataManipulation($sql);
+            }
+        }
         return $result;
     }
-
-    // Inserta los autores de un libro. Recibe el id del libro y la lista de ids de los autores en forma de array.
-    // Devuelve el número de autores insertados con éxito (0 en caso de fallo).
-    // public function insertAutores($idLibro, $autores)
-    // {
-    //     $correctos = 0;
-    //     foreach ($autores as $idAutor) {
-    //         $correctos += $this->db->dataManipulation("INSERT INTO escriben(idLibro, idPersona) VALUES('$idLibro', '$idAutor')");
-    //     }
-    //     return $correctos;
-    // }
 
     // Actualiza un Reservation . Devuelve 1 si tiene éxito y 0 en caso de fallo.
     public function modify($id, $idResource, $idTimeslot, $idUser, $date, $remarks)

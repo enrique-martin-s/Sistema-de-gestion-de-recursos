@@ -37,14 +37,15 @@ echo "<form action='index.php' class='form-inline'>
         <input class='form-control mr-sm-2' type='search' placeholder='Busca' aria-label='Search' name='textoBusqueda'>
         <button class='btn btn-outline-success my-2 my-sm-0' type='submit'>Buscar</button>
       </form><br>";
-      echo "<a href='index.php?controller=timeslotsController&action=formAddTimeslot' class='btn btn-primary'>Crear horario</a>";
+      echo "<a href='index.php?controller=timeslotsController&action=formAddTimeslot' class='btn btn-success'>Crear horario</a>";
 echo "      </nav>";
 
 // Ahora, la tabla con los datos de los libros
 if (count($timeslotList) == 0) {
   echo "No hay datos";
 } else {
-  echo "<table border ='1'>";
+  echo "<div class='row'>
+  <table class='mx-auto' border ='1'>";
   echo "<thead>
             <tr>
               <th>Día</th>
@@ -81,7 +82,7 @@ if (count($timeslotList) == 0) {
     echo "</tr>";
     $day=$fila->dayOfWeek;
   }
-  echo "</table>";
+  echo "</table></div>";
 
 }
 // Linea usada para añadir todos los slots por defecto.

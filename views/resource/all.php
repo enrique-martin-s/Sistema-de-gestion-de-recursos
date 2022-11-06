@@ -19,7 +19,7 @@ echo "<form action='index.php' class='form-inline'>
         <input class='form-control mr-sm-2' type='search' placeholder='Busca' aria-label='Search' name='textoBusqueda'>
         <button class='btn btn-outline-success my-2 my-sm-0' type='submit'>Buscar</button>
       </form><br>";
-      echo "<a href='index.php?controller=resourcesController&action=formAddResource' class='btn btn-primary'>Crear recurso</a>";
+      echo "<a href='index.php?controller=resourcesController&action=formAddResource' class='btn btn-success'>Crear recurso</a>";
 echo "      </nav>";
 
 
@@ -27,13 +27,14 @@ echo "      </nav>";
 if (count($resourceList) == 0) {
   echo "No hay datos";
 } else {
-  echo "<table border ='1'>";
+  echo "<div class='row'>
+  <table class='mx-auto' border ='1'>";
   echo "<thead>
             <tr>
-              <th>Name</th>
-              <th>Description</th>
-              <th>Location</th>
-              <th>Image</th>";
+              <th>Nombre</th>
+              <th>Descripcion</th>
+              <th>Lugar</th>
+              <th>Imagen</th>";
               if (Security::getType() == "admin") {
                 echo "<th colspan='2'>Actions</th>";
                 }
@@ -51,7 +52,7 @@ if (count($resourceList) == 0) {
     }
     echo "</tr>";
   }
-  echo "</table>";
+  echo "</table></div>";
 }
 ?>
 <script type="text/javascript">
