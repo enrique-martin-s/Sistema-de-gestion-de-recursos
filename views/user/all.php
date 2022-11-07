@@ -1,6 +1,6 @@
 <?php
 include_once "./controllers/timeslotsController.php";
-// Recuperamos la lista de libros
+// Recuperamos la lista de recursos
 $userList = $data["userList"];
 
 // Si hay algún mensaje de feedback, lo mostramos
@@ -22,7 +22,7 @@ echo "<form action='index.php' class='form-inline'>
       echo "<a href='index.php?controller=userController&action=formAddUser' class='btn btn-success'>Crear usuario</a>";
 echo "      </nav>";
 
-// Ahora, la tabla con los datos de los libros
+// Ahora, la tabla con los datos de los recursos
 if (count($userList) == 0) {
   echo "No hay datos";
 } else {

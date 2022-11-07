@@ -27,7 +27,7 @@ class TimeslotsController
         }
     }
 
-    // --------------------------------- FORMULARIO ALTA DE LIBROS ----------------------------------------
+    // --------------------------------- FORMULARIO ALTA DE RECURSOS ----------------------------------------
 
     public function formAddTimeslot()
     {   
@@ -39,7 +39,7 @@ class TimeslotsController
         }
     }
 
-    // --------------------------------- INSERTAR LIBROS ----------------------------------------
+    // --------------------------------- INSERTAR RECURSOS ----------------------------------------
 
     public function insertTimeslot()
     {
@@ -55,7 +55,7 @@ class TimeslotsController
         }
     }
 
-    // --------------------------------- BORRAR LIBROS ----------------------------------------
+    // --------------------------------- BORRAR RECURSOS ----------------------------------------
 
     public function deleteTimeslot()
     {   
@@ -71,7 +71,7 @@ class TimeslotsController
     }
     
 
-    // --------------------------------- FORMULARIO MODIFICAR LIBROS ----------------------------------------
+    // --------------------------------- FORMULARIO MODIFICAR RECURSOS ----------------------------------------
 
     public function updateTimeslot()
     {
@@ -85,7 +85,7 @@ class TimeslotsController
         }
     }
 
-    // --------------------------------- MODIFICAR LIBROS ----------------------------------------
+    // --------------------------------- MODIFICAR RECURSOS ----------------------------------------
 
     public function modifyTimeslot()
     {   

@@ -32,7 +32,7 @@ class Timeslot extends Model
         return $result;
     }
 
-    // Inserta los autores de un libro. Recibe el id del libro y la lista de ids de los autores en forma de array.
+    // Inserta los autores de un recurso. Recibe el id del recurso y la lista de ids de los autores en forma de array.
     // Devuelve el número de autores insertados con éxito (0 en caso de fallo).
     // public function insertAutores($idLibro, $autores)
     // {

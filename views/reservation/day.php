@@ -20,7 +20,7 @@ echo "<form action='index.php'>
         <input type='text' name='textoBusqueda'>
         <input type='submit' value='Buscar'>
       </form><br>";
-// Ahora, la tabla con los datos de los libros
+// Ahora, la tabla con los datos de los recursos
 if (count($reservations) == 0) {
   echo "No hay datos";
 } else {

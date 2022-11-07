@@ -24,7 +24,7 @@ echo "<form action='index.php' class='form-inline'>
       </form><br>";
       echo "<a href='index.php?controller=reservationController&action=formAddReservation' class='btn btn-success'>Crear reserva</a>";
 echo "      </nav>";
-// Ahora, la tabla con los datos de los libros
+// Ahora, la tabla con los datos de los recursos
 if (count($reservations) == 0) {
   echo "No hay datos";
 } else {

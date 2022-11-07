@@ -1,7 +1,7 @@
 <?php
 // VISTA PARA LA LISTA DE LIBROS
 
-// Recuperamos la lista de libros
+// Recuperamos la lista de recursos
 $resourceList = $data["resourceList"];
 
 // Si hay algún mensaje de feedback, lo mostramos
@@ -23,7 +23,7 @@ echo "<form action='index.php' class='form-inline'>
 echo "      </nav>";
 
 
-// Ahora, la tabla con los datos de los libros
+// Ahora, la tabla con los datos de los recursos
 if (count($resourceList) == 0) {
   echo "No hay datos";
 } else {

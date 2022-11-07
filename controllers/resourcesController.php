@@ -1,6 +1,6 @@
 <?php
 
-// CONTROLADOR DE LIBROS
+// CONTROLADOR DE RECURSOS
 require_once("models/resources.php");  // Modelos
 require_once("views/view.php");
 require_once("models/security.php"); // Security
@@ -37,7 +37,7 @@ class ResourcesController
         }
     }
 
-    // --------------------------------- FORMULARIO ALTA DE LIBROS ----------------------------------------
+    // --------------------------------- FORMULARIO ALTA DE RECURSOS ----------------------------------------
 
     public function formAddResource()
     {   
@@ -49,7 +49,7 @@ class ResourcesController
         }
     }
 
-    // --------------------------------- INSERTAR LIBROS ----------------------------------------
+    // --------------------------------- INSERTAR RECURSOS ----------------------------------------
 
     public function insertResource()
     {
@@ -74,7 +74,7 @@ class ResourcesController
     }
     }
 
-    // --------------------------------- BORRAR LIBROS ----------------------------------------
+    // --------------------------------- BORRAR RECURSOS ----------------------------------------
 
     public function deleteResource()
     {   
@@ -90,7 +90,7 @@ class ResourcesController
     }
     
 
-    // --------------------------------- FORMULARIO MODIFICAR LIBROS ----------------------------------------
+    // --------------------------------- FORMULARIO MODIFICAR RECURSOS ----------------------------------------
 
     public function updateResource()
     {
@@ -104,7 +104,7 @@ class ResourcesController
         }
     }
 
-    // --------------------------------- MODIFICAR LIBROS ----------------------------------------
+    // --------------------------------- MODIFICAR RECURSOS ----------------------------------------
 
     public function modifyResource()
     {   
