@@ -1,19 +1,19 @@
 <?php
-
+    echo '<div>';
     $resource=$data["resource"];
     $timeslotList=$data["timeslotList"];
     $date=$data["date"];
     if(isset($data["idReservation"])){
         $idReservation=$data["idReservation"];
-        echo '<h2>Modifica tu reserva. Nuevo dia'.$date.'</h2>';
+        echo '<h2>Modifica tu reserva. Nuevo dia '.$date.'</h2>';
     }else{
         $idReservation="";
-        echo '<h2>Haz tu reserva</h2>';
+        echo '<h2>Haz tu reserva para el '.$date.'</h2>';
     }
 
     
 ?>
-<form  action="index.php" method="post"></form>
+<form  action="index.php" method="post"></form><br>
 <label for="availableSlots"> Franjas horarias disponibles:</label>
 <select name="availableSlots" id="slotPicker"></select><br>
 <script>
@@ -34,7 +34,6 @@
     }
     if(slotPicker.length == 0){
         submitButton.disabled = true;
-        print_r("slotPicker");
     }
 </script>
 
@@ -61,6 +60,7 @@
 </script>
 </form>
 <p><a href='javascript:history.back()'>Volver</a></p>
+</div>
 <script>
     function confirmReservation() {
         var slotPicker = document.getElementById('slotPicker');

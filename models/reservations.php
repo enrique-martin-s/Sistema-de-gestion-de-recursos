@@ -47,7 +47,7 @@ class Reservation extends Model
         $sql = "INSERT INTO $this->table (idResource, idTimeslot, idUser, date, remarks) VALUES ($idResource, $idTimeslot, $idUser, '$date', '$remarks')";
         $result = $this->db->dataManipulation($sql);
         if($repeatDate != null){
-            while($date<$repeatDate){
+            while($date<=$repeatDate){
                 $date = date('Y-m-d', strtotime($date. ' + 7 days'));
                 $sql = "INSERT INTO $this->table (idResource, idTimeslot, idUser, date, remarks) VALUES ($idResource, $idTimeslot, $idUser, '$date', '$remarks')";
                 $result = $this->db->dataManipulation($sql);

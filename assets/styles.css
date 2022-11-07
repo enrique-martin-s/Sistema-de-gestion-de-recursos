@@ -84,7 +84,7 @@ div.title-right{
     height: 150px;
 }
 .navbar{
-    width:100% !important;
+    max-width:100% !important;
 }
 
 div.sidenav {

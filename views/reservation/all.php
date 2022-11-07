@@ -8,7 +8,7 @@ if(isset($data["reservations"])){
 }
 
 if (isset($data["info"])) {
-  echo "<div style='color:blue'>".$data["info"]."</div>";
+  echo "<div style='color:white'>".$data["info"]."</div>";
 }
 
 if (isset($data["error"])) {
