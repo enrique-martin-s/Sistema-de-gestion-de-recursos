@@ -42,10 +42,6 @@ class User extends Model
     }
 
     public function updateUser($id, $username, $passwd, $realname) {
-        print_r($id);
-        print_r($username);
-        print_r($passwd);
-        print_r($realname);
         $result = $this->db->dataManipulation("UPDATE Users SET username='$username', password='$passwd', realname='$realname' WHERE id=$id");
         return $result;
     }

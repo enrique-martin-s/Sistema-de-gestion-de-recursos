@@ -53,7 +53,6 @@ class ReservationController
             $date = date("Y-m-d");
             $data["reservationList"] = $this->reservation->getResourceReservations($idResource, $date);
             $data["timeslots"] = $this->timeslot->getDayAllSlots(date('l', strtotime($date)));
-            print_r($data["reservationList"]);
         }else{
             $data["error"] = "No tienes permiso para eso";
             View::renderLogin("user/login", $data);
@@ -114,7 +113,6 @@ class ReservationController
     public function insertReservation()
     {
         if(Security::isLogged()){
-            print_r($_POST);
             $idResource = Security::limpiar($_REQUEST["idResource"]);
             $idTimeslot = Security::limpiar($_REQUEST["idTimeslot"]);
             $idUser = Security::limpiar($_SESSION["idUser"]);
